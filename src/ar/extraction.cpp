@@ -18,7 +18,7 @@ namespace ar {
 ///
 /// @throws InvalidArchiveError when the archive is invalid.
 ///
-std::vector<std::unique_ptr<File>> extract(std::unique_ptr<File> archive) {
+Files extract(std::unique_ptr<File> archive) {
 	Extractor extractor;
 	return extractor.extract(std::move(archive));
 }

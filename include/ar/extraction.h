@@ -9,13 +9,13 @@
 #define AR_EXTRACTION_H
 
 #include <memory>
-#include <vector>
 
 namespace ar {
 
 class File;
+class Files;
 
-std::vector<std::unique_ptr<File>> extract(std::unique_ptr<File> archive);
+Files extract(std::unique_ptr<File> archive);
 
 } // namespace ar
 

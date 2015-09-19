@@ -52,5 +52,79 @@ FromFilesystemWithOtherNameReturnsFileWithCorrectName) {
 	ASSERT_EQ("other.txt", file->getName());
 }
 
+///
+/// Tests for Files.
+///
+class FilesTests: public Test {
+protected:
+	std::unique_ptr<File> anyFile();
+	std::unique_ptr<File> fileNamed(const std::string& name);
+};
+
+std::unique_ptr<File> FilesTests::anyFile() {
+	return fileNamed("noname");
+}
+
+std::unique_ptr<File> FilesTests::fileNamed(const std::string& name) {
+	return File::fromContentWithName("content", name);
+}
+
+TEST_F(FilesTests,
+ContainerIsEmptyAfterCreationByDefault) {
+	Files files;
+
+	ASSERT_TRUE(files.empty());
+}
+
+TEST_F(FilesTests,
+ContainersSizeIsZeroAfterCreationByDefault) {
+	Files files;
+
+	ASSERT_EQ(0, files.size());
+}
+
+TEST_F(FilesTests,
+ContainerIsNoLongerEmptyAfterAppendingFileIntoEmptyContainer) {
+	Files files;
+
+	files.push_back(anyFile());
+
+	ASSERT_FALSE(files.empty());
+}
+
+TEST_F(FilesTests,
+FrontReturnsReferenceToFirstFile) {
+	Files files;
+	files.push_back(fileNamed("a"));
+	files.push_back(fileNamed("b"));
+
+	ASSERT_EQ(files.front(), files.front());
+	ASSERT_EQ("a", files.front()->getName());
+}
+
+TEST_F(FilesTests,
+BackReturnsReferenceToLastFile) {
+	Files files;
+	files.push_back(fileNamed("a"));
+	files.push_back(fileNamed("b"));
+
+	ASSERT_EQ(files.back(), files.back());
+	ASSERT_EQ("b", files.back()->getName());
+}
+
+TEST_F(FilesTests,
+IterationOverNonConstContainerThroughBeginEndWorksCorrectly) {
+	Files files;
+	files.push_back(fileNamed("a"));
+	files.push_back(fileNamed("b"));
+
+	auto it = files.begin();
+	ASSERT_EQ("a", (*it)->getName());
+	++it;
+	ASSERT_EQ("b", (*it)->getName());
+	++it;
+	ASSERT_EQ(it, files.end());
+}
+
 } // namespace tests
 } // namespace ar

@@ -76,4 +76,60 @@ std::unique_ptr<File> File::fromFilesystemWithOtherName(
 	return std::make_unique<FilesystemFile>(path, name);
 }
 
+///
+/// Constructs an empty container (without files).
+///
+Files::Files() = default;
+
+Files::Files(Files&& other): files{std::move(other.files)} {}
+
+Files::~Files() = default;
+
+///
+/// Returns a reference to the first file in the container.
+///
+/// Calling this function on an empty container is undefined.
+///
+auto Files::front() -> reference {
+	return files.front();
+}
+
+///
+/// Returns a reference to the last file in the container.
+///
+/// Calling this function on an empty container is undefined.
+///
+auto Files::back() -> reference {
+	return files.back();
+}
+
+auto Files::begin() -> iterator {
+	return files.begin();
+}
+
+auto Files::end() -> iterator {
+	return files.end();
+}
+
+///
+/// Is the container empty?
+///
+bool Files::empty() const noexcept {
+	return files.empty();
+}
+
+///
+/// Returns the number of files in the container.
+///
+auto Files::size() const noexcept -> size_type {
+	return files.size();
+}
+
+///
+/// Appends the given file to the end of the container.
+///
+void Files::push_back(value_type file) {
+	files.push_back(std::move(file));
+}
+
 } // namespace ar

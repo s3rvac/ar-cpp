@@ -23,14 +23,14 @@ namespace tests {
 ///
 class ExtractorTests: public Test {
 protected:
-	static std::vector<std::unique_ptr<File>> extractArchiveWithContent(
+	static Files extractArchiveWithContent(
 		const std::string& content);
 };
 
 ///
 /// A helper method to make the extraction more readable in tests.
 ///
-std::vector<std::unique_ptr<File>> ExtractorTests::extractArchiveWithContent(
+Files ExtractorTests::extractArchiveWithContent(
 		const std::string& content) {
 	Extractor extractor;
 	return extractor.extract(
@@ -39,7 +39,7 @@ std::vector<std::unique_ptr<File>> ExtractorTests::extractArchiveWithContent(
 }
 
 TEST_F(ExtractorTests,
-ExtractReturnsEmptyVectorForEmptyArchive) {
+ExtractReturnsEmptyContainerForEmptyArchive) {
 	auto files = extractArchiveWithContent("!<arch>\n");
 
 	ASSERT_TRUE(files.empty());
@@ -78,7 +78,7 @@ test.txt/       0           0     0     644     21
 }
 
 TEST_F(ExtractorTests,
-ExtractReturnsSingletonVectorForArchiveWithSingleFile) {
+ExtractReturnsSingletonContainerForArchiveWithSingleFile) {
 	auto files = extractArchiveWithContent(
 		R"(!<arch>
 test.txt/       0           0     0     644     21        `

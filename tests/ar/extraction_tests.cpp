@@ -20,7 +20,7 @@ namespace tests {
 class ExtractTests: public testing::Test {};
 
 TEST_F(ExtractTests,
-ExtractReturnsEmptyVectorForEmptyArchive) {
+ExtractReturnsEmptyContainerForEmptyArchive) {
 	auto files = extract(
 		File::fromContentWithName("!<arch>\n", "archive.a")
 	);
@@ -37,7 +37,7 @@ ExtractThrowsInvalidArchiveErrorWhenMagicStringIsNotPresent) {
 }
 
 TEST_F(ExtractTests,
-ExtractReturnsSingletonVectorForArchiveWithSingleFile) {
+ExtractReturnsSingletonContainerForArchiveWithSingleFile) {
 	auto files = extract(
 		File::fromContentWithName(
 			R"(!<arch>

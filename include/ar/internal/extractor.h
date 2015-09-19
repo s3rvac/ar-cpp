@@ -11,11 +11,11 @@
 #include <cstdint>
 #include <memory>
 #include <string>
-#include <vector>
 
 namespace ar {
 
 class File;
+class Files;
 
 namespace internal {
 
@@ -27,7 +27,7 @@ public:
 	Extractor();
 	~Extractor();
 
-	std::vector<std::unique_ptr<File>> extract(std::unique_ptr<File> archive);
+	Files extract(std::unique_ptr<File> archive);
 
 	/// @name Disabled
 	/// @{
@@ -39,7 +39,7 @@ public:
 
 private:
 	void readMagicString();
-	std::vector<std::unique_ptr<File>> readFiles();
+	Files readFiles();
 	std::unique_ptr<File> readFile();
 	std::string readFileName();
 	void readFileTimestamp();

@@ -34,7 +34,7 @@ Extractor::~Extractor() = default;
 ///
 /// @throws InvalidArchiveError when the archive is invalid.
 ///
-std::vector<std::unique_ptr<File>> Extractor::extract(std::unique_ptr<File> archive) {
+Files Extractor::extract(std::unique_ptr<File> archive) {
 	content = archive->getContent();
 	i = 0;
 
@@ -50,8 +50,8 @@ void Extractor::readMagicString() {
 	i += MagicString.size();
 }
 
-std::vector<std::unique_ptr<File>> Extractor::readFiles() {
-	std::vector<std::unique_ptr<File>> files;
+Files Extractor::readFiles() {
+	Files files;
 	while (i < content.size()) {
 		files.push_back(readFile());
 	}

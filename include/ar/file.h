@@ -10,6 +10,7 @@
 
 #include <memory>
 #include <string>
+#include <vector>
 
 namespace ar {
 
@@ -42,6 +43,52 @@ public:
 
 protected:
 	File();
+};
+
+///
+/// A vector-like container storing files.
+///
+class Files {
+private:
+	/// Underlying type of a container in which files are stored.
+	using Container = std::vector<std::unique_ptr<File>>;
+
+public:
+	using size_type = Container::size_type;
+	using value_type = Container::value_type;
+	using reference = Container::reference;
+	using iterator = Container::iterator;
+
+public:
+	Files();
+	Files(Files&& other);
+	~Files();
+
+	/// @name File Access
+	/// @{
+	reference front();
+	reference back();
+	/// @}
+
+	/// @name Iterators
+	/// @{
+	iterator begin();
+	iterator end();
+	/// @}
+
+	/// @name Capacity
+	/// @{
+	bool empty() const noexcept;
+	size_type size() const noexcept;
+	/// @}
+
+	/// @name Modifiers
+	/// @{
+	void push_back(value_type file);
+	/// @}
+
+private:
+	Container files;
 };
 
 } // namespace ar
