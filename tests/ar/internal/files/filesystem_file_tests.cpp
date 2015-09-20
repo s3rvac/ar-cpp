@@ -11,7 +11,6 @@
 #include "ar/internal/utilities/os.h"
 #include "ar/test_utilities/tmp_file.h"
 
-using namespace testing;
 using namespace ar::tests;
 
 namespace ar {
@@ -21,7 +20,7 @@ namespace tests {
 ///
 /// Tests for FilesystemFile.
 ///
-class FilesystemFileTests: public Test {};
+class FilesystemFileTests: public testing::Test {};
 
 TEST_F(FilesystemFileTests,
 GetNameReturnsCorrectValueWhenNoCustomNameIsGiven) {

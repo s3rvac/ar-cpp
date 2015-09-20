@@ -9,8 +9,6 @@
 
 #include "ar/internal/files/string_file.h"
 
-using namespace testing;
-
 namespace ar {
 namespace internal {
 namespace tests {
@@ -18,7 +16,7 @@ namespace tests {
 ///
 /// Tests for StringFile.
 ///
-class StringFileTests: public Test {};
+class StringFileTests: public testing::Test {};
 
 TEST_F(StringFileTests,
 FileHasCorrectContentUponCreation) {

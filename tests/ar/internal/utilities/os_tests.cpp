@@ -11,7 +11,6 @@
 #include "ar/internal/utilities/os.h"
 #include "ar/test_utilities/tmp_file.h"
 
-using namespace testing;
 using namespace ar::tests;
 
 namespace ar {
@@ -21,7 +20,7 @@ namespace tests {
 ///
 /// Tests for fileNameFromPath().
 ///
-class FileNameFromPathTests: public Test {};
+class FileNameFromPathTests: public testing::Test {};
 
 TEST_F(FileNameFromPathTests,
 FileNameFromPathReturnsCorrectNameForPathWithSeparators) {
@@ -51,7 +50,7 @@ FileNameFromPathContainingNoFileNameReturnsEmptyString) {
 ///
 /// Tests for joinPaths().
 ///
-class JoinPathsTests: public Test {};
+class JoinPathsTests: public testing::Test {};
 
 TEST_F(JoinPathsTests,
 JoinPathsReturnsSecondPathWhenFirstPathIsEmpty) {
@@ -93,7 +92,7 @@ TwoPathsAreJoinedCorrectlyWhenFirstPathEndsWithSlash) {
 ///
 /// Tests for readFile().
 ///
-class ReadFileTests: public Test {};
+class ReadFileTests: public testing::Test {};
 
 TEST_F(ReadFileTests,
 ReturnsCorrectContentWhenFileExists) {
@@ -110,12 +109,12 @@ ThrowsIoErrorWhenFileDoesNotExist) {
 ///
 /// Tests for writeFile().
 ///
-class WriteFileTests: public Test {};
+class WriteFileTests: public testing::Test {};
 
 ///
 /// Tests for copyFile().
 ///
-class CopyFileTests: public Test {};
+class CopyFileTests: public testing::Test {};
 
 TEST_F(CopyFileTests,
 ThrowsIoErrorWhenSourceFileDoesNotExist) {

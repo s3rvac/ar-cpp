@@ -10,15 +10,13 @@
 #include "ar/file.h"
 #include "ar/internal/utilities/os.h"
 
-using namespace testing;
-
 namespace ar {
 namespace tests {
 
 ///
 /// Tests for File.
 ///
-class FileTests: public Test {};
+class FileTests: public testing::Test {};
 
 TEST_F(FileTests,
 FromContentWithNameReturnsFileWithCorrectContentAndName) {
@@ -55,7 +53,7 @@ FromFilesystemWithOtherNameReturnsFileWithCorrectName) {
 ///
 /// Tests for Files.
 ///
-class FilesTests: public Test {
+class FilesTests: public testing::Test {
 protected:
 	std::unique_ptr<File> anyFile();
 	std::unique_ptr<File> fileNamed(const std::string& name);

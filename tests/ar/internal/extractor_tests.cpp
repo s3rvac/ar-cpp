@@ -13,7 +13,6 @@
 #include "ar/internal/extractor.h"
 
 using namespace std::literals::string_literals;
-using namespace testing;
 
 namespace ar {
 namespace internal {
@@ -22,7 +21,7 @@ namespace tests {
 ///
 /// Base class for Extractor tests.
 ///
-class BaseExtractorTests: public Test {
+class BaseExtractorTests: public testing::Test {
 protected:
 	static Files extractArchiveWithContent(
 		const std::string& content);
