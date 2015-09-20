@@ -20,7 +20,7 @@ namespace ar {
 ///
 Files extract(std::unique_ptr<File> archive) {
 	Extractor extractor;
-	return extractor.extract(std::move(archive));
+	return extractor.extract(archive->getContent());
 }
 
 } // namespace ar

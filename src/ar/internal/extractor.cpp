@@ -30,12 +30,12 @@ Extractor::Extractor():
 Extractor::~Extractor() = default;
 
 ///
-/// Extracts the given archive and returns the files it contains.
+/// Extracts files from the given archive content.
 ///
 /// @throws InvalidArchiveError when the archive is invalid.
 ///
-Files Extractor::extract(std::unique_ptr<File> archive) {
-	content = archive->getContent();
+Files Extractor::extract(const std::string& archiveContent) {
+	content = archiveContent;
 	i = 0;
 
 	readMagicString();

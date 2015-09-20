@@ -33,9 +33,7 @@ protected:
 Files ExtractorTests::extractArchiveWithContent(
 		const std::string& content) {
 	Extractor extractor;
-	return extractor.extract(
-		File::fromContentWithName(content, "archive.a")
-	);
+	return extractor.extract(content);
 }
 
 TEST_F(ExtractorTests,

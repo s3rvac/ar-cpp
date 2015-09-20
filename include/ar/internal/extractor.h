@@ -14,7 +14,6 @@
 
 namespace ar {
 
-class File;
 class Files;
 
 namespace internal {
@@ -27,7 +26,7 @@ public:
 	Extractor();
 	~Extractor();
 
-	Files extract(std::unique_ptr<File> archive);
+	Files extract(const std::string& archiveContent);
 
 	/// @name Disabled
 	/// @{
