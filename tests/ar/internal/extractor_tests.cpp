@@ -100,6 +100,27 @@ ExtractReturnsSingletonContainerForArchiveWithSingleFile) {
 	ASSERT_EQ("contents of test.txt", file->getContent());
 }
 
+///
+/// Tests for extraction of GNU archives with a lookup table.
+///
+class GNUArchiveWithLookupTableTests: public BaseExtractorTests {};
+
+TEST_F(GNUArchiveWithLookupTableTests,
+ExtractReturnsSingletonContainerForArchiveWithSingleFile) {
+	auto files = extractArchiveWithContent(
+		"!<arch>\n"s +
+		"/               0           0     0     0       14        `\n"s +
+		"\x00\x00\x00\x10\x00\x00\x00\x52""func1\x00"s +
+		"mod1.o/         0           0     0     644     18      `\n"s +
+		"contents of mod1.o"s
+	);
+
+	ASSERT_EQ(1, files.size());
+	auto& file = files.front();
+	ASSERT_EQ("mod1.o", file->getName());
+	ASSERT_EQ("contents of mod1.o", file->getContent());
+}
+
 } // namespace tests
 } // namespace internal
 } // namespace ar

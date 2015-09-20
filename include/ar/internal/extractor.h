@@ -38,6 +38,7 @@ public:
 
 private:
 	void readMagicString();
+	void readLookupTable();
 	Files readFiles();
 	std::unique_ptr<File> readFile();
 	std::string readFileName();

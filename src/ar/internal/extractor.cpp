@@ -39,6 +39,7 @@ Files Extractor::extract(const std::string& archiveContent) {
 	i = 0;
 
 	readMagicString();
+	readLookupTable();
 	auto files = readFiles();
 	return files;
 }
@@ -48,6 +49,16 @@ void Extractor::readMagicString() {
 		throw InvalidArchiveError{"missing magic string"};
 	}
 	i += MagicString.size();
+}
+
+void Extractor::readLookupTable() {
+	// In the GNU format, the special file name '/' denotes a lookup table.
+	if (content[i] == '/') {
+		// The lookup table has the same format as a file. However, as we do
+		// not need it, throw it away after reading (i.e. do not store the
+		// result of readFile()).
+		readFile();
+	}
 }
 
 Files Extractor::readFiles() {
