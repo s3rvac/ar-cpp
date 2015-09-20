@@ -19,9 +19,9 @@ namespace internal {
 namespace tests {
 
 ///
-/// Tests for Extractor.
+/// Base class for Extractor tests.
 ///
-class ExtractorTests: public Test {
+class BaseExtractorTests: public Test {
 protected:
 	static Files extractArchiveWithContent(
 		const std::string& content);
@@ -30,20 +30,25 @@ protected:
 ///
 /// A helper method to make the extraction more readable in tests.
 ///
-Files ExtractorTests::extractArchiveWithContent(
+Files BaseExtractorTests::extractArchiveWithContent(
 		const std::string& content) {
 	Extractor extractor;
 	return extractor.extract(content);
 }
 
-TEST_F(ExtractorTests,
+///
+/// Common extraction tests for all formats.
+///
+class CommonExtractionTests: public BaseExtractorTests {};
+
+TEST_F(CommonExtractionTests,
 ExtractReturnsEmptyContainerForEmptyArchive) {
 	auto files = extractArchiveWithContent("!<arch>\n");
 
 	ASSERT_TRUE(files.empty());
 }
 
-TEST_F(ExtractorTests,
+TEST_F(CommonExtractionTests,
 ExtractThrowsInvalidArchiveErrorWhenMagicStringIsNotPresent) {
 	ASSERT_THROW(
 		extractArchiveWithContent(""),
@@ -51,7 +56,12 @@ ExtractThrowsInvalidArchiveErrorWhenMagicStringIsNotPresent) {
 	);
 }
 
-TEST_F(ExtractorTests,
+///
+/// Tests for extraction of GNU archives without a lookup table.
+///
+class GNUArchiveWithoutLookupTableTests: public BaseExtractorTests {};
+
+TEST_F(GNUArchiveWithoutLookupTableTests,
 ExtractThrowsInvalidArchiveErrorWhenFileNameIsNotEndedWithSlash) {
 	ASSERT_THROW(
 		extractArchiveWithContent(
@@ -63,7 +73,7 @@ test.txt
 	);
 }
 
-TEST_F(ExtractorTests,
+TEST_F(GNUArchiveWithoutLookupTableTests,
 ExtractThrowsInvalidArchiveErrorWhenFileHeaderEndIsMissing) {
 	ASSERT_THROW(
 		extractArchiveWithContent(
@@ -75,7 +85,7 @@ test.txt/       0           0     0     644     21
 	);
 }
 
-TEST_F(ExtractorTests,
+TEST_F(GNUArchiveWithoutLookupTableTests,
 ExtractReturnsSingletonContainerForArchiveWithSingleFile) {
 	auto files = extractArchiveWithContent(
 		R"(!<arch>
