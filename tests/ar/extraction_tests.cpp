@@ -40,10 +40,10 @@ TEST_F(ExtractTests,
 ExtractReturnsSingletonContainerForArchiveWithSingleFile) {
 	auto files = extract(
 		File::fromContentWithName(
-			R"(!<arch>
-test.txt/       0           0     0     644     21        `
-contents of test.txt
-)",
+			"!<arch>\n"
+			"test.txt/       0           0     0     644     20        `\n"
+			"contents of test.txt"
+		,
 			"archive.a"
 		)
 	);
@@ -51,7 +51,7 @@ contents of test.txt
 	ASSERT_EQ(1, files.size());
 	auto& file = files.front();
 	ASSERT_EQ("test.txt", file->getName());
-	ASSERT_EQ("contents of test.txt\n", file->getContent());
+	ASSERT_EQ("contents of test.txt", file->getContent());
 }
 
 } // namespace tests

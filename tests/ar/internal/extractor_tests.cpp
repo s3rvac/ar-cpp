@@ -12,6 +12,7 @@
 #include "ar/file.h"
 #include "ar/internal/extractor.h"
 
+using namespace std::literals::string_literals;
 using namespace testing;
 
 namespace ar {
@@ -43,7 +44,9 @@ class CommonExtractionTests: public BaseExtractorTests {};
 
 TEST_F(CommonExtractionTests,
 ExtractReturnsEmptyContainerForEmptyArchive) {
-	auto files = extractArchiveWithContent("!<arch>\n");
+	auto files = extractArchiveWithContent(
+		"!<arch>\n"s
+	);
 
 	ASSERT_TRUE(files.empty());
 }
@@ -65,9 +68,8 @@ TEST_F(GNUArchiveWithoutLookupTableTests,
 ExtractThrowsInvalidArchiveErrorWhenFileNameIsNotEndedWithSlash) {
 	ASSERT_THROW(
 		extractArchiveWithContent(
-			R"(!<arch>
-test.txt
-)"
+			"!<arch>\n"s +
+			"test.txt"s
 		),
 		InvalidArchiveError
 	);
@@ -77,9 +79,8 @@ TEST_F(GNUArchiveWithoutLookupTableTests,
 ExtractThrowsInvalidArchiveErrorWhenFileHeaderEndIsMissing) {
 	ASSERT_THROW(
 		extractArchiveWithContent(
-			R"(!<arch>
-test.txt/       0           0     0     644     21
-)"
+			"!<arch>\n"s +
+			"test.txt/       0           0     0     644     20\n"s
 		),
 		InvalidArchiveError
 	);
@@ -88,16 +89,15 @@ test.txt/       0           0     0     644     21
 TEST_F(GNUArchiveWithoutLookupTableTests,
 ExtractReturnsSingletonContainerForArchiveWithSingleFile) {
 	auto files = extractArchiveWithContent(
-		R"(!<arch>
-test.txt/       0           0     0     644     21        `
-contents of test.txt
-)"
+		"!<arch>\n"s +
+		"test.txt/       0           0     0     644     20        `\n"s +
+		"contents of test.txt"s
 	);
 
 	ASSERT_EQ(1, files.size());
 	auto& file = files.front();
 	ASSERT_EQ("test.txt", file->getName());
-	ASSERT_EQ("contents of test.txt\n", file->getContent());
+	ASSERT_EQ("contents of test.txt", file->getContent());
 }
 
 } // namespace tests
