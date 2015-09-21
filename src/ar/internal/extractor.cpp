@@ -45,6 +45,7 @@ Files Extractor::extract(const std::string& archiveContent) {
 }
 
 void Extractor::readMagicString() {
+	// The magic string should appear at the beginning of every archive.
 	if (content.substr(i, MagicString.size()) != MagicString) {
 		throw InvalidArchiveError{"missing magic string"};
 	}
@@ -83,6 +84,7 @@ std::unique_ptr<File> Extractor::readFile() {
 }
 
 std::string Extractor::readFileName() {
+	// In the GNU variant, a file's name ends with a slash.
 	auto pos = content.find('/', i);
 	if (pos == std::string::npos) {
 		throw InvalidArchiveError{"missing '/' after file name"};
@@ -94,21 +96,25 @@ std::string Extractor::readFileName() {
 }
 
 void Extractor::readFileTimestamp() {
+	// Currently unused.
 	skipSpaces();
 	readNum();
 }
 
 void Extractor::readFileOwnerId() {
+	// Currently unused.
 	skipSpaces();
 	readNum();
 }
 
 void Extractor::readFileGroupId() {
+	// Currently unused.
 	skipSpaces();
 	readNum();
 }
 
 void Extractor::readFileMode() {
+	// Currently unused.
 	skipSpaces();
 	readNum();
 }
