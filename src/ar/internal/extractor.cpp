@@ -35,13 +35,16 @@ Extractor::~Extractor() = default;
 /// @throws InvalidArchiveError when the archive is invalid.
 ///
 Files Extractor::extract(const std::string& archiveContent) {
-	content = archiveContent;
-	i = 0;
-
+	initializeWith(archiveContent);
 	readMagicString();
 	readLookupTable();
 	auto files = readFiles();
 	return files;
+}
+
+void Extractor::initializeWith(const std::string& archiveContent) {
+	content = archiveContent;
+	i = 0;
 }
 
 void Extractor::readMagicString() {

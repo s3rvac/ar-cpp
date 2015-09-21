@@ -37,6 +37,8 @@ public:
 	/// @}
 
 private:
+	void initializeWith(const std::string& archiveContent);
+
 	/// @name Reading
 	/// @{
 	void readMagicString();
