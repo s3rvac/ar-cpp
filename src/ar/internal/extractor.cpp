@@ -86,10 +86,7 @@ std::unique_ptr<File> Extractor::readFile() {
 std::string Extractor::readFileName() {
 	// In the GNU variant, a file's name ends with a slash.
 	auto pos = content.find('/', i);
-	if (pos == std::string::npos) {
-		throw InvalidArchiveError{"missing '/' after file name"};
-	}
-
+	ensureContainsSlashOnPosition(pos);
 	auto fileName = content.substr(i, pos - i);
 	i = pos + 1;
 	return fileName;
@@ -126,23 +123,13 @@ std::size_t Extractor::readFileSize() {
 
 void Extractor::readUntilEndOfFileHeader() {
 	auto pos = content.find(FileHeaderEnd, i);
-	if (pos == std::string::npos) {
-		throw InvalidArchiveError{"missing end of file header"};
-	}
+	ensureContainsFileHeaderOnPosition(pos);
 	i = pos + FileHeaderEnd.size();
 }
 
 std::string Extractor::readFileContent(std::size_t fileSize) {
 	auto fileContent = content.substr(i, fileSize);
-	if (fileContent.size() != fileSize) {
-		throw InvalidArchiveError{
-			"premature end of file (expected " +
-			std::to_string(fileSize) +
-			" bytes, read " +
-			std::to_string(fileContent.size()) +
-			" bytes)"
-		};
-	}
+	ensureContentOfGivenSizeWasRead(fileContent.size(), fileSize);
 	i += fileSize;
 	return fileContent;
 }
@@ -159,10 +146,40 @@ std::size_t Extractor::readNumber(const std::string& name) {
 		numAsStr += content[i];
 		++i;
 	}
+	ensureNumberWasRead(numAsStr, name);
+	return std::stoull(numAsStr);
+}
+
+void Extractor::ensureContainsSlashOnPosition(std::string::size_type pos) {
+	if (pos == std::string::npos) {
+		throw InvalidArchiveError{"missing '/' after file name"};
+	}
+}
+
+void Extractor::ensureContainsFileHeaderOnPosition(std::string::size_type pos) {
+	if (pos == std::string::npos) {
+		throw InvalidArchiveError{"missing end of file header"};
+	}
+}
+
+void Extractor::ensureContentOfGivenSizeWasRead(std::size_t readContentSize,
+		std::size_t expectedContentSize) {
+	if (readContentSize != expectedContentSize) {
+		throw InvalidArchiveError{
+			"premature end of file (expected " +
+			std::to_string(expectedContentSize) +
+			" bytes, read " +
+			std::to_string(readContentSize) +
+			" bytes)"
+		};
+	}
+}
+
+void Extractor::ensureNumberWasRead(const std::string& numAsStr,
+		const std::string& name) {
 	if (numAsStr.empty()) {
 		throw InvalidArchiveError{"missing number (" + name + ")"};
 	}
-	return std::stoull(numAsStr);
 }
 
 } // namespace internal

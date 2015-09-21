@@ -53,6 +53,13 @@ private:
 	void skipSpaces();
 	std::size_t readNumber(const std::string& name);
 
+	void ensureContainsSlashOnPosition(std::string::size_type pos);
+	void ensureContainsFileHeaderOnPosition(std::string::size_type pos);
+	void ensureContentOfGivenSizeWasRead(std::size_t readContentSize,
+		std::size_t expectedContentSize);
+	void ensureNumberWasRead(const std::string& numAsStr,
+		const std::string& name);
+
 private:
 	/// Content of the archive.
 	std::string content;
