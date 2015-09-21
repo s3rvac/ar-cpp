@@ -10,11 +10,7 @@ if(NOT AR_TOOLS)
 	return()
 endif()
 
-set(ARTOOL_SOURCES
-	ar-extract.cpp
-)
-
-add_executable(ar-extract ${ARTOOL_SOURCES})
+# ar-extract
+add_executable(ar-extract ar-extract.cpp)
 target_link_libraries(ar-extract ar)
-
 install(TARGETS ar-extract DESTINATION "${INSTALL_BIN_DIR}")
