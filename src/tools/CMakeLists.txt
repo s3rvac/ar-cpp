@@ -14,3 +14,8 @@ endif()
 add_executable(ar-extract ar-extract.cpp)
 target_link_libraries(ar-extract ar)
 install(TARGETS ar-extract DESTINATION "${INSTALL_BIN_DIR}")
+
+# ar-info
+add_executable(ar-info ar-info.cpp)
+target_link_libraries(ar-info ar)
+install(TARGETS ar-info DESTINATION "${INSTALL_BIN_DIR}")
