@@ -29,14 +29,6 @@ ExtractReturnsEmptyContainerForEmptyArchive) {
 }
 
 TEST_F(ExtractTests,
-ExtractThrowsInvalidArchiveErrorWhenMagicStringIsNotPresent) {
-	ASSERT_THROW(
-		extract(File::fromContentWithName("", "archive.a")),
-		InvalidArchiveError
-	);
-}
-
-TEST_F(ExtractTests,
 ExtractReturnsSingletonContainerForArchiveWithSingleFile) {
 	auto files = extract(
 		File::fromContentWithName(
@@ -52,6 +44,14 @@ ExtractReturnsSingletonContainerForArchiveWithSingleFile) {
 	auto& file = files.front();
 	ASSERT_EQ("test.txt", file->getName());
 	ASSERT_EQ("contents of test.txt", file->getContent());
+}
+
+TEST_F(ExtractTests,
+ExtractThrowsInvalidArchiveErrorWhenMagicStringIsNotPresent) {
+	ASSERT_THROW(
+		extract(File::fromContentWithName("", "archive.a")),
+		InvalidArchiveError
+	);
 }
 
 } // namespace tests

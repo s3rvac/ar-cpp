@@ -64,6 +64,20 @@ ExtractThrowsInvalidArchiveErrorWhenMagicStringIsNotPresent) {
 class GNUArchiveWithoutLookupTableTests: public BaseExtractorTests {};
 
 TEST_F(GNUArchiveWithoutLookupTableTests,
+ExtractReturnsSingletonContainerForArchiveWithSingleFile) {
+	auto files = extractArchiveWithContent(
+		"!<arch>\n"s +
+		"test.txt/       0           0     0     644     20        `\n"s +
+		"contents of test.txt"s
+	);
+
+	ASSERT_EQ(1, files.size());
+	auto& file = files.front();
+	ASSERT_EQ("test.txt", file->getName());
+	ASSERT_EQ("contents of test.txt", file->getContent());
+}
+
+TEST_F(GNUArchiveWithoutLookupTableTests,
 ExtractThrowsInvalidArchiveErrorWhenFileNameIsNotEndedWithSlash) {
 	ASSERT_THROW(
 		extractArchiveWithContent(
@@ -83,20 +97,6 @@ ExtractThrowsInvalidArchiveErrorWhenFileHeaderEndIsMissing) {
 		),
 		InvalidArchiveError
 	);
-}
-
-TEST_F(GNUArchiveWithoutLookupTableTests,
-ExtractReturnsSingletonContainerForArchiveWithSingleFile) {
-	auto files = extractArchiveWithContent(
-		"!<arch>\n"s +
-		"test.txt/       0           0     0     644     20        `\n"s +
-		"contents of test.txt"s
-	);
-
-	ASSERT_EQ(1, files.size());
-	auto& file = files.front();
-	ASSERT_EQ("test.txt", file->getName());
-	ASSERT_EQ("contents of test.txt", file->getContent());
 }
 
 ///
