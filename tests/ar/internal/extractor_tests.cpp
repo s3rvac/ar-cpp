@@ -89,6 +89,17 @@ ExtractThrowsInvalidArchiveErrorWhenFileNameIsNotEndedWithSlash) {
 }
 
 TEST_F(GNUArchiveWithoutLookupTableTests,
+ExtractThrowsInvalidArchiveErrorWhenFileSizeIsMissing) {
+	ASSERT_THROW(
+		extractArchiveWithContent(
+			"!<arch>\n"s +
+			"test.txt/       0           0     0     644"s
+		),
+		InvalidArchiveError
+	);
+}
+
+TEST_F(GNUArchiveWithoutLookupTableTests,
 ExtractThrowsInvalidArchiveErrorWhenFileHeaderEndIsMissing) {
 	ASSERT_THROW(
 		extractArchiveWithContent(

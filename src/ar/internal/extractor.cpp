@@ -159,6 +159,9 @@ std::size_t Extractor::readNumber(const std::string& name) {
 		numAsStr += content[i];
 		++i;
 	}
+	if (numAsStr.empty()) {
+		throw InvalidArchiveError{"missing number (" + name + ")"};
+	}
 	return std::stoull(numAsStr);
 }
 
