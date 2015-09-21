@@ -99,6 +99,18 @@ ExtractThrowsInvalidArchiveErrorWhenFileHeaderEndIsMissing) {
 	);
 }
 
+TEST_F(GNUArchiveWithoutLookupTableTests,
+ExtractThrowsInvalidArchiveErrorWhenReadFileContentSizeIsLessThanSpecifiedFileSize) {
+	ASSERT_THROW(
+		extractArchiveWithContent(
+			"!<arch>\n"s +
+			"test.txt/       0           0     0     644     9999      `\n"s +
+			"..."s
+		),
+		InvalidArchiveError
+	);
+}
+
 ///
 /// Tests for extraction of GNU archives with a lookup table.
 ///

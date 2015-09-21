@@ -134,6 +134,15 @@ void Extractor::readUntilEndOfFileHeader() {
 
 std::string Extractor::readFileContent(std::size_t fileSize) {
 	auto fileContent = content.substr(i, fileSize);
+	if (fileContent.size() != fileSize) {
+		throw InvalidArchiveError{
+			"premature end of file (expected " +
+			std::to_string(fileSize) +
+			" bytes, read " +
+			std::to_string(fileContent.size()) +
+			" bytes)"
+		};
+	}
 	i += fileSize;
 	return fileContent;
 }
