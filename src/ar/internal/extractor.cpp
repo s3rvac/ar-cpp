@@ -98,30 +98,30 @@ std::string Extractor::readFileName() {
 void Extractor::readFileTimestamp() {
 	// Currently unused.
 	skipSpaces();
-	readNum();
+	readNumber("timestamp");
 }
 
 void Extractor::readFileOwnerId() {
 	// Currently unused.
 	skipSpaces();
-	readNum();
+	readNumber("file owner ID");
 }
 
 void Extractor::readFileGroupId() {
 	// Currently unused.
 	skipSpaces();
-	readNum();
+	readNumber("file group ID");
 }
 
 void Extractor::readFileMode() {
 	// Currently unused.
 	skipSpaces();
-	readNum();
+	readNumber("file mode");
 }
 
 std::size_t Extractor::readFileSize() {
 	skipSpaces();
-	return readNum();
+	return readNumber("file size");
 }
 
 void Extractor::readUntilEndOfFileHeader() {
@@ -153,7 +153,7 @@ void Extractor::skipSpaces() {
 	}
 }
 
-std::size_t Extractor::readNum() {
+std::size_t Extractor::readNumber(const std::string& name) {
 	std::string numAsStr;
 	while (std::isdigit(content[i])) {
 		numAsStr += content[i];

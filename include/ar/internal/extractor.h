@@ -51,7 +51,7 @@ private:
 	std::string readFileContent(std::size_t fileSize);
 
 	void skipSpaces();
-	std::size_t readNum();
+	std::size_t readNumber(const std::string& name);
 
 private:
 	/// Content of the archive.
