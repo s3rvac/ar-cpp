@@ -37,6 +37,8 @@ public:
 	/// @}
 
 private:
+	/// @name Reading
+	/// @{
 	void readMagicString();
 	void readLookupTable();
 	Files readFiles();
@@ -50,15 +52,21 @@ private:
 	void readUntilEndOfFileHeader();
 	std::string readFileContent(std::size_t fileSize);
 
+	/// @name Utilities
+	/// @{
 	void skipSpaces();
 	std::size_t readNumber(const std::string& name);
+	/// @}
 
+	/// @name Validation
+	/// @{
 	void ensureContainsSlashOnPosition(std::string::size_type pos);
 	void ensureContainsFileHeaderOnPosition(std::string::size_type pos);
 	void ensureContentOfGivenSizeWasRead(std::size_t readContentSize,
 		std::size_t expectedContentSize);
 	void ensureNumberWasRead(const std::string& numAsStr,
 		const std::string& name);
+	/// @}
 
 private:
 	/// Content of the archive.
