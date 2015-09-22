@@ -62,12 +62,12 @@ private:
 
 	/// @name Validation
 	/// @{
-	void ensureContainsSlashOnPosition(std::string::size_type pos);
-	void ensureContainsFileHeaderOnPosition(std::string::size_type pos);
+	void ensureContainsSlashOnPosition(std::string::size_type pos) const;
+	void ensureContainsFileHeaderOnPosition(std::string::size_type pos) const;
 	void ensureContentOfGivenSizeWasRead(std::size_t readContentSize,
-		std::size_t expectedContentSize);
+		std::size_t expectedContentSize) const;
 	void ensureNumberWasRead(const std::string& numAsStr,
-		const std::string& name);
+		const std::string& name) const;
 	/// @}
 
 private:

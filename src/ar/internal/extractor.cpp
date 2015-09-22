@@ -153,20 +153,22 @@ std::size_t Extractor::readNumber(const std::string& name) {
 	return std::stoull(numAsStr);
 }
 
-void Extractor::ensureContainsSlashOnPosition(std::string::size_type pos) {
+void Extractor::ensureContainsSlashOnPosition(
+		std::string::size_type pos) const {
 	if (pos == std::string::npos) {
 		throw InvalidArchiveError{"missing '/' after file name"};
 	}
 }
 
-void Extractor::ensureContainsFileHeaderOnPosition(std::string::size_type pos) {
+void Extractor::ensureContainsFileHeaderOnPosition(
+		std::string::size_type pos) const {
 	if (pos == std::string::npos) {
 		throw InvalidArchiveError{"missing end of file header"};
 	}
 }
 
 void Extractor::ensureContentOfGivenSizeWasRead(std::size_t readContentSize,
-		std::size_t expectedContentSize) {
+		std::size_t expectedContentSize) const {
 	if (readContentSize != expectedContentSize) {
 		throw InvalidArchiveError{
 			"premature end of file (expected " +
@@ -179,7 +181,7 @@ void Extractor::ensureContentOfGivenSizeWasRead(std::size_t readContentSize,
 }
 
 void Extractor::ensureNumberWasRead(const std::string& numAsStr,
-		const std::string& name) {
+		const std::string& name) const {
 	if (numAsStr.empty()) {
 		throw InvalidArchiveError{"missing number (" + name + ")"};
 	}
