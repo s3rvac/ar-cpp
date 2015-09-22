@@ -111,6 +111,21 @@ ThrowsIoErrorWhenFileDoesNotExist) {
 ///
 class WriteFileTests: public testing::Test {};
 
+TEST_F(WriteFileTests,
+WritesCorrectContentToFile) {
+	const std::string Content{"content"};
+	auto tmpFile = TmpFile::createWithContent("");
+
+	writeFile(tmpFile->getPath(), Content);
+
+	ASSERT_EQ(Content, readFile(tmpFile->getPath()));
+}
+
+TEST_F(WriteFileTests,
+ThrowsIoErrorWhenFileCannotBeOpenedForWriting) {
+	ASSERT_THROW(writeFile("/", "content"), IoError);
+}
+
 ///
 /// Tests for copyFile().
 ///
