@@ -83,7 +83,7 @@ ExtractReturnsSingletonContainerForArchiveWithLookupTableAndSingleFile) {
 		"!<arch>\n"s +
 		"/               0           0     0     0       14        `\n"s +
 		"\x00\x00\x00\x10\x00\x00\x00\x52""func1\x00"s +
-		"mod1.o/         0           0     0     644     18      `\n"s +
+		"mod1.o/         0           0     0     644     18        `\n"s +
 		"contents of mod1.o"s
 	);
 
@@ -131,7 +131,7 @@ ExtractThrowsInvalidArchiveErrorWhenReadFileContentSizeIsLessThanSpecifiedFileSi
 	ASSERT_THROW(
 		extractArchiveWithContent(
 			"!<arch>\n"s +
-			"test.txt/       0           0     0     644     9999      `\n"s +
+			"test.txt/       0           0     0     644     9999  `\n"s +
 			"..."s
 		),
 		InvalidArchiveError
