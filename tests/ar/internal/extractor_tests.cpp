@@ -59,11 +59,11 @@ ExtractThrowsInvalidArchiveErrorWhenMagicStringIsNotPresent) {
 }
 
 ///
-/// Tests for extraction of GNU archives without a lookup table.
+/// Tests for extraction of GNU archives.
 ///
-class GNUArchiveWithoutLookupTableTests: public BaseExtractorTests {};
+class GNUArchiveTests: public BaseExtractorTests {};
 
-TEST_F(GNUArchiveWithoutLookupTableTests,
+TEST_F(GNUArchiveTests,
 ExtractReturnsSingletonContainerForArchiveWithSingleFile) {
 	auto files = extractArchiveWithContent(
 		"!<arch>\n"s +
@@ -77,58 +77,8 @@ ExtractReturnsSingletonContainerForArchiveWithSingleFile) {
 	ASSERT_EQ("contents of test.txt", file->getContent());
 }
 
-TEST_F(GNUArchiveWithoutLookupTableTests,
-ExtractThrowsInvalidArchiveErrorWhenFileNameIsNotEndedWithSlash) {
-	ASSERT_THROW(
-		extractArchiveWithContent(
-			"!<arch>\n"s +
-			"test.txt"s
-		),
-		InvalidArchiveError
-	);
-}
-
-TEST_F(GNUArchiveWithoutLookupTableTests,
-ExtractThrowsInvalidArchiveErrorWhenFileSizeIsMissing) {
-	ASSERT_THROW(
-		extractArchiveWithContent(
-			"!<arch>\n"s +
-			"test.txt/       0           0     0     644"s
-		),
-		InvalidArchiveError
-	);
-}
-
-TEST_F(GNUArchiveWithoutLookupTableTests,
-ExtractThrowsInvalidArchiveErrorWhenFileHeaderEndIsMissing) {
-	ASSERT_THROW(
-		extractArchiveWithContent(
-			"!<arch>\n"s +
-			"test.txt/       0           0     0     644     20\n"s
-		),
-		InvalidArchiveError
-	);
-}
-
-TEST_F(GNUArchiveWithoutLookupTableTests,
-ExtractThrowsInvalidArchiveErrorWhenReadFileContentSizeIsLessThanSpecifiedFileSize) {
-	ASSERT_THROW(
-		extractArchiveWithContent(
-			"!<arch>\n"s +
-			"test.txt/       0           0     0     644     9999      `\n"s +
-			"..."s
-		),
-		InvalidArchiveError
-	);
-}
-
-///
-/// Tests for extraction of GNU archives with a lookup table.
-///
-class GNUArchiveWithLookupTableTests: public BaseExtractorTests {};
-
-TEST_F(GNUArchiveWithLookupTableTests,
-ExtractReturnsSingletonContainerForArchiveWithSingleFile) {
+TEST_F(GNUArchiveTests,
+ExtractReturnsSingletonContainerForArchiveWithLookupTableAndSingleFile) {
 	auto files = extractArchiveWithContent(
 		"!<arch>\n"s +
 		"/               0           0     0     0       14        `\n"s +
@@ -141,6 +91,51 @@ ExtractReturnsSingletonContainerForArchiveWithSingleFile) {
 	auto& file = files.front();
 	ASSERT_EQ("mod1.o", file->getName());
 	ASSERT_EQ("contents of mod1.o", file->getContent());
+}
+
+TEST_F(GNUArchiveTests,
+ExtractThrowsInvalidArchiveErrorWhenFileNameIsNotEndedWithSlash) {
+	ASSERT_THROW(
+		extractArchiveWithContent(
+			"!<arch>\n"s +
+			"test.txt"s
+		),
+		InvalidArchiveError
+	);
+}
+
+TEST_F(GNUArchiveTests,
+ExtractThrowsInvalidArchiveErrorWhenFileSizeIsMissing) {
+	ASSERT_THROW(
+		extractArchiveWithContent(
+			"!<arch>\n"s +
+			"test.txt/       0           0     0     644"s
+		),
+		InvalidArchiveError
+	);
+}
+
+TEST_F(GNUArchiveTests,
+ExtractThrowsInvalidArchiveErrorWhenFileHeaderEndIsMissing) {
+	ASSERT_THROW(
+		extractArchiveWithContent(
+			"!<arch>\n"s +
+			"test.txt/       0           0     0     644     20\n"s
+		),
+		InvalidArchiveError
+	);
+}
+
+TEST_F(GNUArchiveTests,
+ExtractThrowsInvalidArchiveErrorWhenReadFileContentSizeIsLessThanSpecifiedFileSize) {
+	ASSERT_THROW(
+		extractArchiveWithContent(
+			"!<arch>\n"s +
+			"test.txt/       0           0     0     644     9999      `\n"s +
+			"..."s
+		),
+		InvalidArchiveError
+	);
 }
 
 } // namespace tests
