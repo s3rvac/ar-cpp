@@ -38,6 +38,7 @@ Files Extractor::extract(const std::string& archiveContent) {
 	initializeWith(archiveContent);
 	readMagicString();
 	readLookupTable();
+	readFileNameTable();
 	auto files = readFiles();
 	return files;
 }
@@ -45,6 +46,7 @@ Files Extractor::extract(const std::string& archiveContent) {
 void Extractor::initializeWith(const std::string& archiveContent) {
 	content = archiveContent;
 	i = 0;
+	fileNameTable.clear();
 }
 
 void Extractor::readMagicString() {
@@ -57,12 +59,63 @@ void Extractor::readMagicString() {
 
 void Extractor::readLookupTable() {
 	// In the GNU format, the special file name '/' denotes a lookup table.
-	if (content[i] == '/') {
+	// However, we need to ensure that it is just a standalone '/' because "//"
+	// denotes the start of a filename table.
+	if (content[i] == '/' && content.substr(i, 2) != "//") {
 		// The lookup table has the same format as a file. However, as we do
-		// not need it, throw it away after reading (i.e. do not store the
-		// result of readFile()).
-		readFile();
+		// not need it, throw it away after reading (i.e. do not store its
+		// content).
+		++i;
+		readFileTimestamp();
+		readFileOwnerId();
+		readFileGroupId();
+		readFileMode();
+		auto fileSize = readFileSize();
+		readUntilEndOfFileHeader();
+		readFileContent(fileSize);
 	}
+}
+
+void Extractor::readFileNameTable() {
+	// In the GNU format, the special file name "//" denotes a filename table.
+	// It contains names of files, one by line, that are referenced by
+	// subsequent file headers. It is used to store file names that are longer
+	// than 16 chars.
+	//
+	// Example:
+	//
+	//   !<arch>\n
+	//   //                                              42        `\n
+	//   very_long_name_of_a_module_in_archive.o/\n
+	//   \n
+	//   /0              0           0     0     644     22        `\n
+	//   contents of the module
+	//
+	// The references are of the form "/X", where X is the index into the
+	// filename table.
+	if (content.substr(i, 2) == "//") {
+		i += 2;
+		const auto tableSize = readNumber("filename table size");
+		readUntilEndOfFileHeader();
+		const auto tableStart = i;
+		const auto tableEnd = i + tableSize;
+		while (i < tableEnd) {
+			readFileNameIntoFileNameTable(tableStart);
+		}
+	}
+}
+
+void Extractor::readFileNameIntoFileNameTable(std::size_t tableStart) {
+	// A row in the filename table in the GNU variant is of the form
+	//
+	//   module.o/
+	//
+	const auto tableIndex = i - tableStart;
+	auto fileName = readFileNameEndedWithSlash();
+	fileNameTable.emplace(tableIndex, std::move(fileName));
+
+	// Skip separators/padding.
+	skipEndsOfLines();
 }
 
 Files Extractor::readFiles() {
@@ -87,12 +140,36 @@ std::unique_ptr<File> Extractor::readFile() {
 }
 
 std::string Extractor::readFileName() {
-	// In the GNU variant, a file's name ends with a slash.
+	// In the GNU variant, the name of the file can be either an index into the
+	// filename table:
+	//
+	//   /X
+	//
+	// or a slash-ended name:
+	//
+	//   module.o/
+	//
+	if (content[i] == '/') {
+		++i;
+		const auto index = readNumber("index into filename table");
+		return nameFromFileNameTableOnIndex(index);
+	} else {
+		return readFileNameEndedWithSlash();
+	}
+}
+
+std::string Extractor::readFileNameEndedWithSlash() {
 	auto pos = content.find('/', i);
 	ensureContainsSlashOnPosition(pos);
 	auto fileName = content.substr(i, pos - i);
 	i = pos + 1;
 	return fileName;
+}
+
+std::string Extractor::nameFromFileNameTableOnIndex(std::size_t index) const {
+	auto it = fileNameTable.find(index);
+	ensureIsValidFileNameTableIndex(it, index);
+	return it->second;
 }
 
 void Extractor::readFileTimestamp() {
@@ -133,7 +210,15 @@ std::string Extractor::readFileContent(std::size_t fileSize) {
 }
 
 void Extractor::skipSpaces() {
-	while (content[i] == ' ') {
+	skipSuccessiveChars(' ');
+}
+
+void Extractor::skipEndsOfLines() {
+	skipSuccessiveChars('\n');
+}
+
+void Extractor::skipSuccessiveChars(char c) {
+	while (content[i] == c) {
 		++i;
 	}
 }
@@ -148,6 +233,15 @@ std::size_t Extractor::readNumber(const std::string& name) {
 	}
 	ensureNumberWasRead(numAsStr, name);
 	return std::stoull(numAsStr);
+}
+
+void Extractor::ensureIsValidFileNameTableIndex(FileNameTable::const_iterator it,
+		std::size_t index) const {
+	if (it == fileNameTable.end()) {
+		throw InvalidArchiveError{
+			"invalid index into filename table: " + std::to_string(index)
+		};
+	}
 }
 
 void Extractor::ensureContainsSlashOnPosition(

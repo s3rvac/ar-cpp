@@ -9,6 +9,7 @@
 #define AR_INTERNAL_EXTRACTOR_H
 
 #include <cstdint>
+#include <map>
 #include <memory>
 #include <string>
 
@@ -37,15 +38,23 @@ public:
 	/// @}
 
 private:
+	/// Mapping of an index into a file name.
+	using FileNameTable = std::map<std::size_t, std::string>;
+
+private:
 	void initializeWith(const std::string& archiveContent);
 
 	/// @name Reading
 	/// @{
 	void readMagicString();
 	void readLookupTable();
+	void readFileNameTable();
+	void readFileNameIntoFileNameTable(std::size_t startOfTable);
 	Files readFiles();
 	std::unique_ptr<File> readFile();
 	std::string readFileName();
+	std::string readFileNameEndedWithSlash();
+	std::string nameFromFileNameTableOnIndex(std::size_t index) const;
 	void readFileTimestamp();
 	void readFileOwnerId();
 	void readFileGroupId();
@@ -57,11 +66,15 @@ private:
 	/// @name Utilities
 	/// @{
 	void skipSpaces();
+	void skipEndsOfLines();
+	void skipSuccessiveChars(char c);
 	std::size_t readNumber(const std::string& name);
 	/// @}
 
 	/// @name Validation
 	/// @{
+	void ensureIsValidFileNameTableIndex(FileNameTable::const_iterator it,
+		std::size_t index) const;
 	void ensureContainsSlashOnPosition(std::string::size_type pos) const;
 	void ensureContainsFileHeaderOnPosition(std::string::size_type pos) const;
 	void ensureContentOfGivenSizeWasRead(std::size_t readContentSize,
@@ -76,6 +89,9 @@ private:
 
 	/// Current index to @c content.
 	std::size_t i;
+
+	/// Table containing names of files.
+	FileNameTable fileNameTable;
 };
 
 } // namespace internal

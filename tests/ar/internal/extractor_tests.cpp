@@ -94,6 +94,23 @@ ExtractReturnsSingletonContainerForArchiveWithLookupTableAndSingleFile) {
 }
 
 TEST_F(GNUArchiveTests,
+ExtractReturnsSingletonContainerForArchiveWithFileNameTableAndSingleFile) {
+	auto files = extractArchiveWithContent(
+		"!<arch>\n"s +
+		"//                                              42        `\n"s +
+		"very_long_name_of_a_module_in_archive.o/\n"s +
+		"\n"
+		"/0              0           0     0     644     22        `\n"s +
+		"contents of the module"s
+	);
+
+	ASSERT_EQ(1, files.size());
+	auto& file = files.front();
+	ASSERT_EQ("very_long_name_of_a_module_in_archive.o", file->getName());
+	ASSERT_EQ("contents of the module", file->getContent());
+}
+
+TEST_F(GNUArchiveTests,
 ExtractThrowsInvalidArchiveErrorWhenFileNameIsNotEndedWithSlash) {
 	ASSERT_THROW(
 		extractArchiveWithContent(
