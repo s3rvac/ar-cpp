@@ -155,6 +155,50 @@ ExtractThrowsInvalidArchiveErrorWhenReadFileContentSizeIsLessThanSpecifiedFileSi
 	);
 }
 
+TEST_F(GNUArchiveTests,
+ExtractThrowsInvalidArchiveErrorWhenFileNameTableSizeIsMissing) {
+	ASSERT_THROW(
+		extractArchiveWithContent(
+			"!<arch>\n"s +
+			"//"s
+		),
+		InvalidArchiveError
+	);
+}
+
+TEST_F(GNUArchiveTests,
+ExtractThrowsInvalidArchiveErrorWhenHeaderEndOfFileNameTableIsInvalid) {
+	ASSERT_THROW(
+		extractArchiveWithContent(
+			"!<arch>\n"s +
+			"//                                              XXX"s
+		),
+		InvalidArchiveError
+	);
+}
+
+TEST_F(GNUArchiveTests,
+ExtractThrowsInvalidArchiveErrorWhenHeaderEndOfFileNameTableIsMissing) {
+	ASSERT_THROW(
+		extractArchiveWithContent(
+			"!<arch>\n"s +
+			"//                                              42"s
+		),
+		InvalidArchiveError
+	);
+}
+
+TEST_F(GNUArchiveTests,
+ExtractThrowsInvalidArchiveErrorWhenFileNameTableEndsPrematurely) {
+	ASSERT_THROW(
+		extractArchiveWithContent(
+			"!<arch>\n"s +
+			"//                                              42        `\n"s
+		),
+		InvalidArchiveError
+	);
+}
+
 } // namespace tests
 } // namespace internal
 } // namespace ar
