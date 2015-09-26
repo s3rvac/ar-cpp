@@ -162,6 +162,7 @@ std::string Extractor::readFileNameEndedWithSlash() {
 	auto pos = content.find('/', i);
 	ensureContainsSlashOnPosition(pos);
 	auto fileName = content.substr(i, pos - i);
+	ensureFileNameIsNonEmpty(fileName);
 	i = pos + 1;
 	return fileName;
 }
@@ -241,6 +242,12 @@ void Extractor::ensureIsValidFileNameTableIndex(FileNameTable::const_iterator it
 		throw InvalidArchiveError{
 			"invalid index into filename table: " + std::to_string(index)
 		};
+	}
+}
+
+void Extractor::ensureFileNameIsNonEmpty(const std::string& fileName) const {
+	if (fileName.empty()) {
+		throw InvalidArchiveError{"file has an empty name"};
 	}
 }
 

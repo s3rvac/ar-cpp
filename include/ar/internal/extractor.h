@@ -73,6 +73,7 @@ private:
 
 	/// @name Validation
 	/// @{
+	void ensureFileNameIsNonEmpty(const std::string& fileName) const;
 	void ensureIsValidFileNameTableIndex(FileNameTable::const_iterator it,
 		std::size_t index) const;
 	void ensureContainsSlashOnPosition(std::string::size_type pos) const;

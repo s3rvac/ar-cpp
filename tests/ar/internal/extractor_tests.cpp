@@ -199,6 +199,18 @@ ExtractThrowsInvalidArchiveErrorWhenFileNameTableEndsPrematurely) {
 	);
 }
 
+TEST_F(GNUArchiveTests,
+ExtractThrowsInvalidArchiveErrorWhenFileNameInFileNameTableIsEmpty) {
+	ASSERT_THROW(
+		extractArchiveWithContent(
+			"!<arch>\n"s +
+			"//                                              2         `\n"s +
+			"/\n"s
+		),
+		InvalidArchiveError
+	);
+}
+
 } // namespace tests
 } // namespace internal
 } // namespace ar
