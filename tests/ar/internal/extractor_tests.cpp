@@ -225,6 +225,38 @@ ExtractThrowsInvalidArchiveErrorWhenFileNameInFileNameTableIsEmpty) {
 	);
 }
 
+TEST_F(GNUArchiveTests,
+ExtractThrowsInvalidArchiveErrorWhenIndexIntoFileNameTableDoesNotExist) {
+	ASSERT_THROW(
+		extractArchiveWithContent(
+			"!<arch>\n"s +
+			"//                                              42        `\n"s +
+			"very_long_name_of_a_module_in_archive.o/\n"s +
+			"\n"
+			// The index 1 is invalid (the only valid index is 0).
+			"/1              0           0     0     644     22        `\n"s +
+			"contents of the module"s
+		),
+		InvalidArchiveError
+	);
+}
+
+TEST_F(GNUArchiveTests,
+ExtractThrowsInvalidArchiveErrorWhenIndexIntoFileNameTableIsInvalid) {
+	ASSERT_THROW(
+		extractArchiveWithContent(
+			"!<arch>\n"s +
+			"//                                              42        `\n"s +
+			"very_long_name_of_a_module_in_archive.o/\n"s +
+			"\n"
+			// The index Z is invalid (it has to be a number).
+			"/Z              0           0     0     644     22        `\n"s +
+			"contents of the module"s
+		),
+		InvalidArchiveError
+	);
+}
+
 } // namespace tests
 } // namespace internal
 } // namespace ar
