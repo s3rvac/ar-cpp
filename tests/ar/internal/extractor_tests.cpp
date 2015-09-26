@@ -122,6 +122,20 @@ ExtractThrowsInvalidArchiveErrorWhenFileNameIsNotEndedWithSlash) {
 }
 
 TEST_F(GNUArchiveTests,
+ExtractThrowsInvalidArchiveErrorWhenFileNameIsEmpty) {
+	ASSERT_THROW(
+		extractArchiveWithContent(
+			"!<arch>\n"s +
+			// The first '/' denotes a symbol table, the second '/' is a file
+			// with an empty name.
+			"/               0           0     0     644     0         `\n"s +
+			"/               0           0     0     644     0         `\n"s
+		),
+		InvalidArchiveError
+	);
+}
+
+TEST_F(GNUArchiveTests,
 ExtractThrowsInvalidArchiveErrorWhenFileSizeIsMissing) {
 	ASSERT_THROW(
 		extractArchiveWithContent(

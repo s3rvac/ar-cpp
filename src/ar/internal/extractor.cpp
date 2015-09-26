@@ -149,13 +149,22 @@ std::string Extractor::readFileName() {
 	//
 	//   module.o/
 	//
-	if (content[i] == '/') {
+	if (hasNameSpecifiedViaIndexIntoFileNameTable()) {
 		++i;
 		const auto index = readNumber("index into filename table");
 		return nameFromFileNameTableOnIndex(index);
 	} else {
 		return readFileNameEndedWithSlash();
 	}
+}
+
+bool Extractor::hasNameSpecifiedViaIndexIntoFileNameTable() const {
+	// The index specification has to be of the form
+	//
+	//   /X
+	//
+	// where X is a number (the index).
+	return content[i] == '/' && std::isdigit(content[i+1]);
 }
 
 std::string Extractor::readFileNameEndedWithSlash() {

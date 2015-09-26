@@ -53,6 +53,7 @@ private:
 	Files readFiles();
 	std::unique_ptr<File> readFile();
 	std::string readFileName();
+	bool hasNameSpecifiedViaIndexIntoFileNameTable() const;
 	std::string readFileNameEndedWithSlash();
 	std::string nameFromFileNameTableOnIndex(std::size_t index) const;
 	void readFileTimestamp();
