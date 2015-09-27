@@ -48,6 +48,7 @@ private:
 	/// @{
 	void readMagicString();
 	void readLookupTable();
+	bool hasLookupTableAt(std::size_t i) const;
 	void readFileNameTable();
 	void readFileNameIntoFileNameTable(std::size_t startOfTable);
 	Files readFiles();
@@ -66,6 +67,8 @@ private:
 
 	/// @name Utilities
 	/// @{
+	bool isValid(std::size_t j) const;
+	std::string::value_type charAt(std::size_t j) const;
 	void skipSpaces();
 	void skipEndsOfLines();
 	void skipSuccessiveChars(char c);

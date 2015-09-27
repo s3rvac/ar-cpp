@@ -61,7 +61,7 @@ void Extractor::readLookupTable() {
 	// In the GNU format, the special file name '/' denotes a lookup table.
 	// However, we need to ensure that it is just a standalone '/' because "//"
 	// denotes the start of a filename table.
-	if (content[i] == '/' && content.substr(i, 2) != "//") {
+	if (hasLookupTableAt(i)) {
 		// The lookup table has the same format as a file. However, as we do
 		// not need it, throw it away after reading (i.e. do not store its
 		// content).
@@ -74,6 +74,10 @@ void Extractor::readLookupTable() {
 		readUntilEndOfFileHeader();
 		readFileContent(fileSize);
 	}
+}
+
+bool Extractor::hasLookupTableAt(std::size_t i) const {
+	return isValid(i) && content[i] == '/' && content.substr(i, 2) != "//";
 }
 
 void Extractor::readFileNameTable() {
@@ -164,7 +168,7 @@ bool Extractor::hasNameSpecifiedViaIndexIntoFileNameTable() const {
 	//   /X
 	//
 	// where X is a number (the index).
-	return content[i] == '/' && std::isdigit(content[i+1]);
+	return isValid(i + 1) && content[i] == '/' && std::isdigit(content[i + 1]);
 }
 
 std::string Extractor::readFileNameEndedWithSlash() {
@@ -219,6 +223,19 @@ std::string Extractor::readFileContent(std::size_t fileSize) {
 	return fileContent;
 }
 
+bool Extractor::isValid(std::size_t j) const {
+	return j < content.size();
+}
+
+std::string::value_type Extractor::charAt(std::size_t j) const {
+	if (!isValid(j)) {
+		throw InvalidArchiveError{
+			"premature end of archive at byte " + std::to_string(j)
+		};
+	}
+	return content[j];
+}
+
 void Extractor::skipSpaces() {
 	skipSuccessiveChars(' ');
 }
@@ -228,7 +245,7 @@ void Extractor::skipEndsOfLines() {
 }
 
 void Extractor::skipSuccessiveChars(char c) {
-	while (content[i] == c) {
+	while (isValid(i) && content[i] == c) {
 		++i;
 	}
 }
@@ -237,7 +254,7 @@ std::size_t Extractor::readNumber(const std::string& name) {
 	skipSpaces();
 
 	std::string numAsStr;
-	while (std::isdigit(content[i])) {
+	while (isValid(i) && std::isdigit(content[i])) {
 		numAsStr += content[i];
 		++i;
 	}
