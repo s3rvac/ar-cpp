@@ -153,7 +153,7 @@ std::string Extractor::readFileName() {
 	//
 	//   module.o/
 	//
-	if (hasNameSpecifiedViaIndexIntoFileNameTable()) {
+	if (hasNameSpecifiedViaIndexIntoFileNameTableAt(i)) {
 		++i;
 		const auto index = readNumber("index into filename table");
 		return nameFromFileNameTableOnIndex(index);
@@ -162,13 +162,13 @@ std::string Extractor::readFileName() {
 	}
 }
 
-bool Extractor::hasNameSpecifiedViaIndexIntoFileNameTable() const {
+bool Extractor::hasNameSpecifiedViaIndexIntoFileNameTableAt(std::size_t j) const {
 	// The index specification has to be of the form
 	//
 	//   /X
 	//
 	// where X is a number (the index).
-	return isValid(i + 1) && content[i] == '/' && std::isdigit(content[i + 1]);
+	return isValid(j + 1) && content[j] == '/' && std::isdigit(content[j + 1]);
 }
 
 std::string Extractor::readFileNameEndedWithSlash() {
