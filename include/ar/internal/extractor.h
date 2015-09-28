@@ -67,7 +67,7 @@ private:
 
 	/// @name Utilities
 	/// @{
-	bool isValid(std::size_t j) const;
+	bool isValid(std::size_t j) const noexcept;
 	std::string::value_type charAt(std::size_t j) const;
 	void skipSpaces();
 	void skipEndsOfLines();

@@ -103,11 +103,11 @@ auto Files::back() -> reference {
 	return files.back();
 }
 
-auto Files::begin() -> iterator {
+auto Files::begin() noexcept -> iterator {
 	return files.begin();
 }
 
-auto Files::end() -> iterator {
+auto Files::end() noexcept -> iterator {
 	return files.end();
 }
 

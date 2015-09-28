@@ -72,8 +72,8 @@ public:
 
 	/// @name Iterators
 	/// @{
-	iterator begin();
-	iterator end();
+	iterator begin() noexcept;
+	iterator end() noexcept;
 	/// @}
 
 	/// @name Capacity

@@ -223,7 +223,7 @@ std::string Extractor::readFileContent(std::size_t fileSize) {
 	return fileContent;
 }
 
-bool Extractor::isValid(std::size_t j) const {
+bool Extractor::isValid(std::size_t j) const noexcept {
 	return j < content.size();
 }
 
