@@ -48,6 +48,19 @@ GetContentReturnsCorrectContent) {
 	ASSERT_EQ("content", file.getContent());
 }
 
+TEST_F(FilesystemFileTests,
+SaveCopyToSavesCopyOfFileToGivenDirectory) {
+	const std::string Content{"content"};
+	auto tmpFile = TmpFile::createWithContent(Content);
+	const std::string Name{"ar-filesystemfile-file-save-copy-to-test.txt"};
+	FilesystemFile file{tmpFile->getPath(), Name};
+
+	file.saveCopyTo(".");
+
+	RemoveFileOnDestruction remover{Name};
+	ASSERT_EQ(Content, readFile(Name));
+}
+
 } // namespace tests
 } // namespace internal
 } // namespace ar

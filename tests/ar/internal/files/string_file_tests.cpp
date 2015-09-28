@@ -8,6 +8,10 @@
 #include <gtest/gtest.h>
 
 #include "ar/internal/files/string_file.h"
+#include "ar/internal/utilities/os.h"
+#include "ar/test_utilities/tmp_file.h"
+
+using namespace ar::tests;
 
 namespace ar {
 namespace internal {
@@ -37,6 +41,18 @@ GetNameReturnsEmptyStringWhenFileHasNoName) {
 	StringFile file{"content"};
 
 	ASSERT_EQ("", file.getName());
+}
+
+TEST_F(StringFileTests,
+SaveCopyToSavesCopyOfFileToGivenDirectory) {
+	const std::string Content{"content"};
+	const std::string Name{"ar-stringfile-save-copy-to-test.txt"};
+	StringFile file{Content, Name};
+
+	file.saveCopyTo(".");
+
+	RemoveFileOnDestruction remover{Name};
+	ASSERT_EQ(Content, readFile(Name));
 }
 
 } // namespace tests
