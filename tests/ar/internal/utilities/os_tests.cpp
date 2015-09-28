@@ -132,6 +132,17 @@ ThrowsIoErrorWhenFileCannotBeOpenedForWriting) {
 class CopyFileTests: public testing::Test {};
 
 TEST_F(CopyFileTests,
+WritesCorrectContentToFile) {
+	const std::string Content{"content"};
+	auto tmpInFile = TmpFile::createWithContent(Content);
+	auto tmpOutFile = TmpFile::createWithContent("");
+
+	copyFile(tmpInFile->getPath(), tmpOutFile->getPath());
+
+	ASSERT_EQ(Content, readFile(tmpOutFile->getPath()));
+}
+
+TEST_F(CopyFileTests,
 ThrowsIoErrorWhenSourceFileDoesNotExist) {
 	ASSERT_THROW(copyFile("nonexisting-file", "any-file"), IoError);
 }
