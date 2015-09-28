@@ -36,29 +36,6 @@ if(NOT GTEST_FOUND)
 endif()
 include_directories(SYSTEM ${GTEST_INCLUDE_DIR})
 
-# Google Mock
-find_package(GMock QUIET)
-if(NOT GMOCK_FOUND)
-	ExternalProject_Add(googlemock
-		URL http://googlemock.googlecode.com/files/gmock-1.7.0.zip
-		# Disable the install step.
-		INSTALL_COMMAND ""
-		# Wrap the download, configure and build steps in a script to log the
-		# output.
-		LOG_DOWNLOAD ON
-		LOG_CONFIGURE ON
-		LOG_BUILD ON
-	)
-	ExternalProject_Get_Property(googlemock source_dir)
-	ExternalProject_Get_Property(googlemock binary_dir)
-	set(GMOCK_INCLUDE_DIR "${source_dir}/include")
-	set(GMOCK_LIBRARY_DIR "${binary_dir}")
-	set(GMOCK_LIBRARY "gmock")
-	set(GMOCK_MAIN_LIBRARY "gmock_main")
-	link_directories(${GMOCK_LIBRARY_DIR})
-endif()
-include_directories(SYSTEM ${GMOCK_INCLUDE_DIR})
-
 ##
 ## Includes.
 ##

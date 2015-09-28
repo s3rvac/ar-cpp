@@ -27,8 +27,7 @@ endif()
 target_link_libraries(ar_tests
 	ar
 	${GTEST_LIBRARY}
-	${GMOCK_LIBRARY}
-	${GMOCK_MAIN_LIBRARY}
+	${GTEST_MAIN_LIBRARY}
 )
 
 install(TARGETS ar_tests DESTINATION "${INSTALL_BIN_DIR}/tests")
