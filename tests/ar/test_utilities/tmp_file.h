@@ -33,6 +33,19 @@ private:
 	std::unique_ptr<Impl> impl;
 };
 
+///
+/// RAII helper that removes the given file in its destructor.
+///
+class RemoveFileOnDestruction {
+public:
+	RemoveFileOnDestruction(const std::string& path);
+	~RemoveFileOnDestruction();
+
+private:
+	/// Path to the file to be removed.
+	const std::string path;
+};
+
 } // namespace tests
 } // namespace ar
 

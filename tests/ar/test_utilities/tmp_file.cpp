@@ -77,5 +77,12 @@ std::unique_ptr<TmpFile> TmpFile::createWithContent(const std::string& content) 
 	return std::make_unique<TmpFile>(content);
 }
 
+RemoveFileOnDestruction::RemoveFileOnDestruction(const std::string& path):
+	path(path) {}
+
+RemoveFileOnDestruction::~RemoveFileOnDestruction() {
+	std::remove(path.c_str());
+}
+
 } // namespace tests
 } // namespace ar
