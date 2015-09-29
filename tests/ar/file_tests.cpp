@@ -68,6 +68,16 @@ std::unique_ptr<File> FilesTests::fileNamed(const std::string& name) {
 }
 
 TEST_F(FilesTests,
+MoveConstructorMoveConstructsFilesFromOtherFiles) {
+	Files files;
+	files.push_back(anyFile());
+
+	Files filesMoveCopy(std::move(files));
+
+	ASSERT_EQ(1, filesMoveCopy.size());
+}
+
+TEST_F(FilesTests,
 ContainerIsEmptyAfterCreationByDefault) {
 	Files files;
 
