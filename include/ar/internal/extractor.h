@@ -8,7 +8,7 @@
 #ifndef AR_INTERNAL_EXTRACTOR_H
 #define AR_INTERNAL_EXTRACTOR_H
 
-#include <cstdint>
+#include <cstddef>
 #include <map>
 #include <memory>
 #include <string>
