@@ -2,7 +2,7 @@
 /// @file      tools/ar-info.cpp
 /// @copyright (c) 2015 by Petr Zemek (s3rvac@gmail.com) and contributors
 /// @license   MIT, see the @c LICENSE file for more details
-/// @brief     A sample application that uses the library to show the contents
+/// @brief     A sample application that uses the library to show the content
 ///            of archives.
 ///
 
