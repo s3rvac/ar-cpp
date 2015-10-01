@@ -2,7 +2,7 @@
 /// @file      ar/internal/extractor.h
 /// @copyright (c) 2015 by Petr Zemek (s3rvac@gmail.com) and contributors
 /// @license   MIT, see the @c LICENSE file for more details
-/// @brief     Extractor of files from an archive.
+/// @brief     %Extractor of files from an archive.
 ///
 
 #ifndef AR_INTERNAL_EXTRACTOR_H
@@ -20,7 +20,7 @@ class Files;
 namespace internal {
 
 ///
-/// Extractor of files from an archive.
+/// %Extractor of files from an archive.
 ///
 class Extractor {
 public:
