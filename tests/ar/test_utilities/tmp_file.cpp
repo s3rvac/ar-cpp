@@ -32,42 +32,26 @@ std::string getUniqueTemporaryFilePath() {
 } // anonymous namespace
 
 ///
-/// Private implementation of TmpFile.
-///
-struct TmpFile::Impl {
-	/// Creates a temporary file with the given content.
-	Impl():
-		path{getUniqueTemporaryFilePath()},
-		file{path, std::ios::binary} {}
-
-	/// Path to the temporary file.
-	const std::string path;
-
-	/// Temporary file.
-	std::ofstream file;
-};
-
-///
 /// Creates a temporary file with the given content.
 ///
 TmpFile::TmpFile(const std::string& content):
-		impl{std::make_unique<Impl>()} {
-	impl->file << content;
-	impl->file.flush();
+		path{getUniqueTemporaryFilePath()} {
+	std::ofstream file{path, std::ios::binary};
+	file << content;
 }
 
 ///
-/// Destroys the temporary file by removing it.
+/// Removes the temporary file from the filesystem.
 ///
 TmpFile::~TmpFile() {
-	std::remove(impl->path.c_str());
+	std::remove(path.c_str());
 }
 
 ///
 /// Returns a path to the file.
 ///
 std::string TmpFile::getPath() const {
-	return impl->path;
+	return path;
 }
 
 ///

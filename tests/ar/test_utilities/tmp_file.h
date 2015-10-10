@@ -28,9 +28,8 @@ public:
 		const std::string& content);
 
 private:
-	struct Impl;
-	/// Private implementation.
-	std::unique_ptr<Impl> impl;
+	/// Path to the temporary file.
+	std::string path;
 };
 
 ///
