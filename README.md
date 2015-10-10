@@ -52,6 +52,10 @@ You can pass additional parameters to `cmake`:
     useful during development. By default, the library is built in the
     `release` mode.
 * `-DCMAKE_INSTALL_PREFIX:PATH=/usr` to set a custom installation path.
+* `-G` to set a custom project files generator (the default one generates
+  UNIX Makefiles). For example, for
+  [MSYS2](https://sourceforge.net/projects/msys2/) on Windows, use `-G'MSYS
+  Makefiles'`.
 
 The `make` call supports standard parameters, such as:
 * `-j N` to build the library by using `N` processors.
