@@ -1,7 +1,7 @@
 ar-cpp
 ======
 
-A C++ library for parsing of [ar](https://en.wikipedia.org/wiki/Ar_(Unix)
+A C++ library for parsing of [ar](https://en.wikipedia.org/wiki/Ar_(Unix))
 archives.
 
 ``` cpp
