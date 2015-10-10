@@ -21,9 +21,6 @@ add_executable(ar_tests ${AR_TESTS_SOURCES})
 if(NOT GTEST_FOUND)
 	add_dependencies(ar googletest)
 endif()
-if(NOT GTEST_FOUND)
-	add_dependencies(ar googlemock)
-endif()
 target_link_libraries(ar_tests
 	ar
 	${GTEST_LIBRARY}
