@@ -81,6 +81,12 @@ API Documentation
 The latest API documentation is available
 [here](http://projects.petrzemek.net/ar-cpp/doc/latest/).
 
+Code Coverage
+-------------
+
+The latest code coverage by tests is available
+[here](http://projects.petrzemek.net/ar-cpp/coverage/latest/).
+
 License
 -------
 
