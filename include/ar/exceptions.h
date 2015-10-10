@@ -31,7 +31,7 @@ public:
 ///
 /// Exception thrown when there is an I/O error.
 ///
-class IoError: public Error {
+class IOError: public Error {
 public:
 	using Error::Error;
 };

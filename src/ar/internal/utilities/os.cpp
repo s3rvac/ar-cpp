@@ -97,7 +97,7 @@ std::string joinPaths(const std::string& path1, const std::string& path2) {
 ///
 /// @param[in] path Path to the file.
 ///
-/// @throws IoError When the file cannot be opened or read.
+/// @throws IOError When the file cannot be opened or read.
 ///
 /// The file is opened in the binary mode, so no conversions are performed
 /// during the reading.
@@ -105,7 +105,7 @@ std::string joinPaths(const std::string& path1, const std::string& path2) {
 std::string readFile(const std::string& path) {
 	std::ifstream file{path, std::ios::binary};
 	if (!file) {
-		throw IoError{"cannot open file \"" + path + "\""};
+		throw IOError{"cannot open file \"" + path + "\""};
 	}
 
 	file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
@@ -120,7 +120,7 @@ std::string readFile(const std::string& path) {
 		file.seekg(0, std::ios::beg);
 		file.read(&content[0], content.size());
 	} catch (const std::ifstream::failure& ex) {
-		throw IoError{"cannot read file \"" + path + "\" (" + ex.what() + ")"};
+		throw IOError{"cannot read file \"" + path + "\" (" + ex.what() + ")"};
 	}
 	return content;
 }
@@ -128,7 +128,7 @@ std::string readFile(const std::string& path) {
 ///
 /// Stores a file with the given @a content into the given @a path.
 ///
-/// @throws IoError When the file cannot be opened or written.
+/// @throws IOError When the file cannot be opened or written.
 ///
 /// The file is opened in the binary mode, so no conversions are performed
 /// during writing.
@@ -136,19 +136,19 @@ std::string readFile(const std::string& path) {
 void writeFile(const std::string& path, const std::string& content) {
 	std::ofstream file{path, std::ios::binary};
 	if (!file) {
-		throw IoError{"cannot open file \"" + path + "\""};
+		throw IOError{"cannot open file \"" + path + "\""};
 	}
 
 	file << content;
 	if (!file) {
-		throw IoError{"cannot write file \"" + path + "\""};
+		throw IOError{"cannot write file \"" + path + "\""};
 	}
 }
 
 ///
 /// Copies file in @a srcPath to a file in @a dstPath.
 ///
-/// @throws IoError When a file cannot be opened, read, or written.
+/// @throws IOError When a file cannot be opened, read, or written.
 ///
 void copyFile(const std::string& srcPath, const std::string& dstPath) {
 	auto content = readFile(srcPath);

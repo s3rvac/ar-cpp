@@ -102,8 +102,8 @@ ReturnsCorrectContentWhenFileExists) {
 }
 
 TEST_F(ReadFileTests,
-ThrowsIoErrorWhenFileDoesNotExist) {
-	ASSERT_THROW(readFile("nonexisting-file"), IoError);
+ThrowsIOErrorWhenFileDoesNotExist) {
+	ASSERT_THROW(readFile("nonexisting-file"), IOError);
 }
 
 ///
@@ -122,8 +122,8 @@ WritesCorrectContentToFile) {
 }
 
 TEST_F(WriteFileTests,
-ThrowsIoErrorWhenFileCannotBeOpenedForWriting) {
-	ASSERT_THROW(writeFile("/", "content"), IoError);
+ThrowsIOErrorWhenFileCannotBeOpenedForWriting) {
+	ASSERT_THROW(writeFile("/", "content"), IOError);
 }
 
 ///
@@ -143,8 +143,8 @@ WritesCorrectContentToFile) {
 }
 
 TEST_F(CopyFileTests,
-ThrowsIoErrorWhenSourceFileDoesNotExist) {
-	ASSERT_THROW(copyFile("nonexisting-file", "any-file"), IoError);
+ThrowsIOErrorWhenSourceFileDoesNotExist) {
+	ASSERT_THROW(copyFile("nonexisting-file", "any-file"), IOError);
 }
 
 } // namespace tests
