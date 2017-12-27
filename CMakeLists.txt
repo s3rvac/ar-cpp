@@ -116,7 +116,7 @@ if(AR_COVERAGE)
 	# Add a custom target to generate the code coverage.
 	add_custom_target(coverage
 		COMMENT "Running the tests and generating code coverage"
-		COMMAND "${PROJECT_BINARY_DIR}/tests/ar/ar_tests"
+		COMMAND "${PROJECT_BINARY_DIR}/tests/ar/ar-tests"
 		COMMAND mkdir -p coverage
 		COMMAND lcov --capture --no-external
 			--directory include --directory "${PROJECT_BINARY_DIR}/include"

@@ -17,11 +17,11 @@ set(AR_TESTS_SOURCES
 	test_utilities/tmp_file.cpp
 )
 
-add_executable(ar_tests ${AR_TESTS_SOURCES})
-target_include_directories(ar_tests PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../")
-target_link_libraries(ar_tests
+add_executable(ar-tests ${AR_TESTS_SOURCES})
+target_include_directories(ar-tests PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../")
+target_link_libraries(ar-tests
 	ar
 	GTest::GTest
 	GTest::Main
 )
-install(TARGETS ar_tests DESTINATION "${INSTALL_BIN_DIR}")
+install(TARGETS ar-tests DESTINATION "${INSTALL_BIN_DIR}")
