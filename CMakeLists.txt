@@ -20,11 +20,11 @@ option(AR_TOOLS "Build tools." OFF)
 option(AR_COVERAGE "Build with code coverage support (requires lcov and build with tests)." OFF)
 option(AR_TESTS "Build tests." OFF)
 
-if(${AR_INTERNAL_DOC})
+if(AR_INTERNAL_DOC)
 	set(AR_DOC ON)
 endif()
 
-if(${AR_COVERAGE})
+if(AR_COVERAGE)
 	set(AR_TESTS ON)
 endif()
 
