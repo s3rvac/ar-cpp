@@ -42,11 +42,11 @@ Build and Installation
 * `make && make install`
 
 You can pass additional parameters to `cmake`:
-* `-DAR_DOC=1` to build with API documentation (requires
+* `-DAR_DOC=ON` to build with API documentation (requires
     [Doxygen](http://www.doxygen.org/), disabled by default).
-* `-DAR_TOOLS=1` to build with tools (disabled by default).
-* `-DAR_TESTS=1` to build with tests (disabled by default).
-* `-DAR_COVERAGE=1` to build with code coverage support (requires
+* `-DAR_TOOLS=ON` to build with tools (disabled by default).
+* `-DAR_TESTS=ON` to build with tests (disabled by default).
+* `-DAR_COVERAGE=ON` to build with code coverage support (requires
     [LCOV](http://ltp.sourceforge.net/coverage/lcov.php), disabled by default).
 * `-DCMAKE_BUILD_TYPE=debug` to build with debugging information, which is
     useful during development. By default, the library is built in the
