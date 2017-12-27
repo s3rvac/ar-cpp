@@ -30,33 +30,36 @@ To build the library, you need:
 * [CMake](https://cmake.org/) version >= 3.5.
 
 The library is developed and tested on Linux, although it should also work on
-Windows (Visual Studio 2015 or greater).
+Windows (Visual Studio 2015 or greater), and possibly on macOS as well. If not,
+please, [submit an issue](https://github.com/s3rvac/ar-cpp/issues).
 
 Build and Installation
 ----------------------
 
-* Clone the repository or download the sources into a directory. Lets call that
+* Clone the repository or download the sources into a directory. Let's call that
   directory `ar-cpp`.
 * `cd ar-cpp`
 * `mkdir build && cd build`
 * `cmake ..`
-* `make && make install`
+* Linux: `make` and `make install`
+* Windows: Open the generated `ar.sln` project file in Visual Studio and build it
+  from there.
 
 You can pass additional parameters to `cmake`:
 * `-DAR_DOC=ON` to build with API documentation (requires
-    [Doxygen](http://www.doxygen.org/), disabled by default).
+  [Doxygen](http://www.doxygen.org/), disabled by default).
 * `-DAR_TOOLS=ON` to build with tools (disabled by default).
 * `-DAR_TESTS=ON` to build with tests (requires
-    [GoogleTest](https://github.com/google/googletest), disabled by default).
+  [GoogleTest](https://github.com/google/googletest), disabled by default).
 * `-DAR_COVERAGE=ON` to build with code coverage support (requires GCC and
-    [LCOV](http://ltp.sourceforge.net/coverage/lcov.php), disabled by default).
+  [LCOV](http://ltp.sourceforge.net/coverage/lcov.php), disabled by default).
 * `-DCMAKE_BUILD_TYPE=Debug` to build with debugging information, which is
-    useful during development. By default, the library is built in the
-    `Release` mode.
-* `-DCMAKE_INSTALL_PREFIX:PATH=/home/projects/ar-cpp-installed` to set a custom
-    installation path.
-* `-G` to set a custom project files generator (the default one generates
-  UNIX Makefiles). For example, for Visual Studio 2015 on 64b Windows, use
+  useful during development. By default, the library is built in the `Release`
+  mode.
+* `-DCMAKE_INSTALL_PREFIX:PATH=ar-install-dir` to set a custom installation
+  path.
+* `-G` to set a custom project files generator (the default one generates UNIX
+  Makefiles). For example, for Visual Studio 2015 on 64b Windows, use
   `-G"Visual Studio 14 2015 Win64"`.
 
 The `make` call supports standard parameters, such as:
