@@ -6,5 +6,7 @@
 ## CMake configuration file for the source files.
 ##
 
-add_subdirectory(tools)
 add_subdirectory(ar)
+if(AR_TOOLS)
+	add_subdirectory(tools)
+endif()

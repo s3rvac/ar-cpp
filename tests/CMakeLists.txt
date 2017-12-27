@@ -6,12 +6,4 @@
 ## CMake configuration file for tests.
 ##
 
-if(NOT AR_TESTS)
-	return()
-endif()
-
-##
-## Subdirectories.
-##
-
 add_subdirectory(ar)

@@ -135,7 +135,11 @@ endif()
 ## Subdirectories.
 ##
 
-add_subdirectory(doc)
+if(AR_DOC)
+	add_subdirectory(doc)
+endif()
 add_subdirectory(include)
 add_subdirectory(src)
-add_subdirectory(tests)
+if(AR_TESTS)
+	add_subdirectory(tests)
+endif()
