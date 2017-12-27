@@ -17,6 +17,11 @@ set(AR_SOURCES
 )
 
 add_library(ar ${AR_SOURCES})
+target_include_directories(ar
+	PUBLIC
+		$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
+		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/ar>
+)
 
 install(TARGETS ar DESTINATION "${CMAKE_INSTALL_LIBDIR}" EXPORT ar)
 install(EXPORT ar DESTINATION "${CMAKE_INSTALL_DATADIR}/ar/cmake")

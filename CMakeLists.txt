@@ -49,12 +49,6 @@ if(AR_TESTS)
 endif()
 
 ##
-## Includes.
-##
-
-include_directories(include)
-
-##
 ## Global compiler options.
 ##
 
