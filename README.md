@@ -27,7 +27,7 @@ To build the library, you need:
 * A compiler supporting C++14, such as [GCC](https://gcc.gnu.org/) version >=
   4.9, [Clang](http://clang.llvm.org/) version >= 3.4, or Visual
   Studio 2015 or greater.
-* [CMake](https://cmake.org/) version >= 3.0.
+* [CMake](https://cmake.org/) version >= 3.5.
 
 The library is developed and tested on Linux, although it should also work on
 Windows (Visual Studio 2015 or greater).
@@ -46,7 +46,8 @@ You can pass additional parameters to `cmake`:
 * `-DAR_DOC=ON` to build with API documentation (requires
     [Doxygen](http://www.doxygen.org/), disabled by default).
 * `-DAR_TOOLS=ON` to build with tools (disabled by default).
-* `-DAR_TESTS=ON` to build with tests (disabled by default).
+* `-DAR_TESTS=ON` to build with tests (requires
+    [GoogleTest](https://github.com/google/googletest), disabled by default).
 * `-DAR_COVERAGE=ON` to build with code coverage support (requires
     [LCOV](http://ltp.sourceforge.net/coverage/lcov.php), disabled by default).
 * `-DCMAKE_BUILD_TYPE=Debug` to build with debugging information, which is

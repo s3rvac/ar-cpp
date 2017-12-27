@@ -18,13 +18,10 @@ set(AR_TESTS_SOURCES
 )
 
 add_executable(ar_tests ${AR_TESTS_SOURCES})
-if(NOT GTEST_FOUND)
-	add_dependencies(ar googletest)
-endif()
+target_include_directories(ar_tests PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../")
 target_link_libraries(ar_tests
 	ar
-	${GTEST_LIBRARY}
-	${GTEST_MAIN_LIBRARY}
+	GTest::GTest
+	GTest::Main
 )
-
-install(TARGETS ar_tests DESTINATION "${INSTALL_BIN_DIR}/tests")
+install(TARGETS ar_tests DESTINATION "${INSTALL_BIN_DIR}")

@@ -6,9 +6,9 @@
 ## The project's main CMake configuration file.
 ##
 
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.5)
 
-project(ar-cpp CXX C)
+project(ar-cpp CXX)
 
 ##
 ## Options.
@@ -46,10 +46,9 @@ set(INSTALL_LIB_CMAKE_DIR "${INSTALL_LIB_DIR}/cmake")
 ## Dependencies.
 ##
 
-include(ExternalProject)
-
-# The default root directory for external projects.
-set_directory_properties(PROPERTIES EP_PREFIX ${CMAKE_BINARY_DIR}/third_party)
+if(AR_TESTS)
+	find_package(GTest REQUIRED)
+endif()
 
 ##
 ## Includes.
