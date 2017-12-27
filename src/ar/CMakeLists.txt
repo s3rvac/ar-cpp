@@ -22,6 +22,9 @@ target_include_directories(ar
 		$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
 		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/ar>
 )
+if(AR_COVERAGE)
+	target_link_libraries(ar gcov)
+endif()
 install(TARGETS ar EXPORT ar-target
 	ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
 	INCLUDES DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
