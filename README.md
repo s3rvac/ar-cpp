@@ -26,7 +26,7 @@ Requirements
 To build the library, you need:
 * A compiler supporting C++14, such as [GCC](https://gcc.gnu.org/) version >=
   4.9 or [Clang](http://clang.llvm.org/) version >= 3.4.
-* [CMake](https://cmake.org/) version >= 2.8.
+* [CMake](https://cmake.org/) version >= 3.0.
 
 The library is developed and tested on Linux and Microsoft Windows (via
 [MSYS2](https://sourceforge.net/projects/msys2/)).
