@@ -48,7 +48,7 @@ You can pass additional parameters to `cmake`:
 * `-DAR_TOOLS=ON` to build with tools (disabled by default).
 * `-DAR_TESTS=ON` to build with tests (requires
     [GoogleTest](https://github.com/google/googletest), disabled by default).
-* `-DAR_COVERAGE=ON` to build with code coverage support (requires
+* `-DAR_COVERAGE=ON` to build with code coverage support (requires GCC and
     [LCOV](http://ltp.sourceforge.net/coverage/lcov.php), disabled by default).
 * `-DCMAKE_BUILD_TYPE=Debug` to build with debugging information, which is
     useful during development. By default, the library is built in the
