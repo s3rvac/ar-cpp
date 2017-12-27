@@ -66,15 +66,24 @@ The `make` call supports standard parameters, such as:
 Use
 ---
 
-If you use [CMake](https://cmake.org/), you can incorporate the library into
-your project in the following way:
+After the installation, you can incorporate the library into your project in
+the following way (provided that you use [CMake](https://cmake.org/)):
 ```
-set(ar_DIR "/path/to/installed/ar-cpp/lib/cmake")
 find_package(ar)
-include_directories(SYSTEM ${ar_INCLUDE_DIR})
 
 add_executable(your_app your_app.cpp)
 target_link_libraries(your_app ar)
+```
+If you have not installed ar-cpp into your system (i.e. you installed it only
+locally into some directory), you will have to provide the path to the
+`$INSTALL_DIR/lib/cmake/ar` directory prior to calling `find_package(ar)`,
+either by
+```
+set(ar_DIR "$INSTALL_DIR/lib/cmake/ar")
+```
+or via the following `cmake` parameter:
+```
+-Dar_DIR "$INSTALL_DIR/lib/cmake/ar"
 ```
 
 API Documentation

@@ -22,18 +22,13 @@ target_include_directories(ar
 		$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
 		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/ar>
 )
-
-install(TARGETS ar DESTINATION "${CMAKE_INSTALL_LIBDIR}" EXPORT ar)
-install(EXPORT ar DESTINATION "${CMAKE_INSTALL_DATADIR}/ar/cmake")
-
-# Configuration file for find_package(ar).
-configure_file(
-	ar-config.cmake.in
-	"${CMAKE_BINARY_DIR}/ar-config-install.cmake"
-	@ONLY
+install(TARGETS ar EXPORT ar-target
+	ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+	INCLUDES DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
+	LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+	RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
 )
-install(
-	FILES "${CMAKE_BINARY_DIR}/ar-config-install.cmake"
-	DESTINATION "${CMAKE_INSTALL_DATADIR}/ar/cmake"
-	RENAME ar-config.cmake
+install(EXPORT ar-target
+	FILE ar-config.cmake
+	DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/ar"
 )
