@@ -18,8 +18,8 @@ set(AR_SOURCES
 
 add_library(ar ${AR_SOURCES})
 
-install(TARGETS ar DESTINATION "${INSTALL_LIB_DIR}" EXPORT ar)
-install(EXPORT ar DESTINATION "${INSTALL_LIB_CMAKE_DIR}")
+install(TARGETS ar DESTINATION "${CMAKE_INSTALL_LIBDIR}" EXPORT ar)
+install(EXPORT ar DESTINATION "${CMAKE_INSTALL_DATADIR}/ar/cmake")
 
 # Configuration file for find_package(ar).
 configure_file(
@@ -29,6 +29,6 @@ configure_file(
 )
 install(
 	FILES "${CMAKE_BINARY_DIR}/ar-config-install.cmake"
-	DESTINATION "${INSTALL_LIB_CMAKE_DIR}"
+	DESTINATION "${CMAKE_INSTALL_DATADIR}/ar/cmake"
 	RENAME ar-config.cmake
 )

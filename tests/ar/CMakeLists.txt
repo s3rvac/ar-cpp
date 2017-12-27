@@ -24,4 +24,4 @@ target_link_libraries(ar-tests PRIVATE
 	GTest::GTest
 	GTest::Main
 )
-install(TARGETS ar-tests DESTINATION "${INSTALL_BIN_DIR}")
+install(TARGETS ar-tests DESTINATION "${CMAKE_INSTALL_BINDIR}")

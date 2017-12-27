@@ -6,5 +6,5 @@
 ## Project's CMake configuration file for find_package(ar).
 ##
 
-include("@INSTALL_LIB_CMAKE_DIR@/ar.cmake")
+include("@CMAKE_INSTALL_DATADIR@/ar/cmake/ar.cmake")
 set(ar_INCLUDE_DIRS @INSTALL_INCLUDE_DIR@)

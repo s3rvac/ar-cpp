@@ -9,9 +9,9 @@
 # ar-extract
 add_executable(ar-extract ar-extract.cpp)
 target_link_libraries(ar-extract PRIVATE ar)
-install(TARGETS ar-extract DESTINATION "${INSTALL_BIN_DIR}")
+install(TARGETS ar-extract DESTINATION "${CMAKE_INSTALL_BINDIR}")
 
 # ar-info
 add_executable(ar-info ar-info.cpp)
 target_link_libraries(ar-info PRIVATE ar)
-install(TARGETS ar-info DESTINATION "${INSTALL_BIN_DIR}")
+install(TARGETS ar-info DESTINATION "${CMAKE_INSTALL_BINDIR}")

@@ -8,7 +8,7 @@
 
 cmake_minimum_required(VERSION 3.5)
 
-project(ar-cpp CXX)
+project(ar CXX)
 
 ##
 ## Options.
@@ -32,15 +32,13 @@ endif()
 ## Paths.
 ##
 
+# Use GNUInstallDirs to install files into correct locations on all platforms.
+include(GNUInstallDirs)
+
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake")
 if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
     set(CMAKE_INSTALL_PREFIX "${CMAKE_SOURCE_DIR}/install" CACHE PATH "default install path" FORCE)
 endif()
-set(INSTALL_BIN_DIR "${CMAKE_INSTALL_PREFIX}/bin")
-set(INSTALL_DOC_DIR "${CMAKE_INSTALL_PREFIX}/share/ar/doc")
-set(INSTALL_INCLUDE_DIR "${CMAKE_INSTALL_PREFIX}/include")
-set(INSTALL_LIB_DIR "${CMAKE_INSTALL_PREFIX}/lib")
-set(INSTALL_LIB_CMAKE_DIR "${INSTALL_LIB_DIR}/cmake")
 
 ##
 ## Dependencies.
