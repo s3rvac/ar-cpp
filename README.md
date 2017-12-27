@@ -25,11 +25,12 @@ Requirements
 
 To build the library, you need:
 * A compiler supporting C++14, such as [GCC](https://gcc.gnu.org/) version >=
-  4.9 or [Clang](http://clang.llvm.org/) version >= 3.4.
+  4.9, [Clang](http://clang.llvm.org/) version >= 3.4, or Visual
+  Studio 2015 or greater.
 * [CMake](https://cmake.org/) version >= 3.0.
 
-The library is developed and tested on Linux and Microsoft Windows (via
-[MSYS2](https://sourceforge.net/projects/msys2/)).
+The library is developed and tested on Linux, although it should also work on
+Windows (Visual Studio 2015 or greater).
 
 Build and Installation
 ----------------------
@@ -53,9 +54,8 @@ You can pass additional parameters to `cmake`:
     `release` mode.
 * `-DCMAKE_INSTALL_PREFIX:PATH=/usr` to set a custom installation path.
 * `-G` to set a custom project files generator (the default one generates
-  UNIX Makefiles). For example, for
-  [MSYS2](https://sourceforge.net/projects/msys2/) on Windows, use `-G'MSYS
-  Makefiles'`.
+  UNIX Makefiles). For example, for Visual Studio 2015 on 64b Windows, use
+  `-G"Visual Studio 14 2015 Win64"`.
 
 The `make` call supports standard parameters, such as:
 * `-j N` to build the library by using `N` processors.
