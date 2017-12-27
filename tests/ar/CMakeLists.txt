@@ -19,7 +19,7 @@ set(AR_TESTS_SOURCES
 
 add_executable(ar-tests ${AR_TESTS_SOURCES})
 target_include_directories(ar-tests PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../")
-target_link_libraries(ar-tests
+target_link_libraries(ar-tests PRIVATE
 	ar
 	GTest::GTest
 	GTest::Main
