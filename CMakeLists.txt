@@ -14,6 +14,11 @@ project(ar CXX)
 ## Options.
 ##
 
+if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+	message(STATUS "Setting build type to 'Release' as none was specified")
+	set(CMAKE_BUILD_TYPE "Release" CACHE STRING "Build type." FORCE)
+endif()
+
 option(AR_DOC "Build public API documentation (requires Doxygen)." OFF)
 option(AR_INTERNAL_DOC "Build also the internal parts of the API documentation." OFF)
 option(AR_TOOLS "Build tools." OFF)
