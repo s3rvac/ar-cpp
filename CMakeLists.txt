@@ -35,11 +35,6 @@ endif()
 # Use GNUInstallDirs to install files into correct locations on all platforms.
 include(GNUInstallDirs)
 
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake")
-if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
-    set(CMAKE_INSTALL_PREFIX "${CMAKE_SOURCE_DIR}/install" CACHE PATH "default install path" FORCE)
-endif()
-
 ##
 ## Dependencies.
 ##

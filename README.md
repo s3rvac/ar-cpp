@@ -53,7 +53,8 @@ You can pass additional parameters to `cmake`:
 * `-DCMAKE_BUILD_TYPE=Debug` to build with debugging information, which is
     useful during development. By default, the library is built in the
     `Release` mode.
-* `-DCMAKE_INSTALL_PREFIX:PATH=/usr` to set a custom installation path.
+* `-DCMAKE_INSTALL_PREFIX:PATH=/home/projects/ar-cpp-installed` to set a custom
+    installation path.
 * `-G` to set a custom project files generator (the default one generates
   UNIX Makefiles). For example, for Visual Studio 2015 on 64b Windows, use
   `-G"Visual Studio 14 2015 Win64"`.
