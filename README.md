@@ -49,9 +49,9 @@ You can pass additional parameters to `cmake`:
 * `-DAR_TESTS=ON` to build with tests (disabled by default).
 * `-DAR_COVERAGE=ON` to build with code coverage support (requires
     [LCOV](http://ltp.sourceforge.net/coverage/lcov.php), disabled by default).
-* `-DCMAKE_BUILD_TYPE=debug` to build with debugging information, which is
+* `-DCMAKE_BUILD_TYPE=Debug` to build with debugging information, which is
     useful during development. By default, the library is built in the
-    `release` mode.
+    `Release` mode.
 * `-DCMAKE_INSTALL_PREFIX:PATH=/usr` to set a custom installation path.
 * `-G` to set a custom project files generator (the default one generates
   UNIX Makefiles). For example, for Visual Studio 2015 on 64b Windows, use
