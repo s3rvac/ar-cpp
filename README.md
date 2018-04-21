@@ -17,8 +17,7 @@ for (auto& file : files) {
 Status
 ------
 
-The library currently supports basic extraction of GNU/System V archives. More
-features are on their way, depending on the needs of users.
+The library currently supports basic extraction of GNU/System V archives.
 
 Requirements
 ------------
