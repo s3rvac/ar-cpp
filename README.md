@@ -1,6 +1,9 @@
 ar-cpp
 ======
 
+**Warning: This project was an experiment and is no longer maintained. I
+suggest using a different library.**
+
 A C++ library for parsing of [ar](https://en.wikipedia.org/wiki/Ar_(Unix))
 archives.
 
